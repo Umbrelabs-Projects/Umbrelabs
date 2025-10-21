@@ -7,8 +7,11 @@ import { ThemeProvider } from "@/components/theme-provider"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Umbrelabs - Everything you can think of, from a single point",
+  title: "Umbrelabs - Covering Your Vision. Crafting Your Solution",
   description: "From idea to execution — solutions, apps, AI, design, cloud, and more. Everything in and out of tech. From one lab.",
+  icons: {
+    icon: "/logos/umbrelabs-high-resolution-logo-transparent.png",
+  },
 }
 
 export default function RootLayout({
@@ -19,18 +22,18 @@ export default function RootLayout({
   const setThemeScript = `
     (function() {
       try {
-        const storedTheme = localStorage.getItem('techbox-theme');
+        const storedTheme = localStorage.getItem('umbrelabs-theme');
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        
-        let initialTheme = 'light'; // Default to light, then check preferences
+
+        let initialTheme = 'amber-glow'; // Default to amber-glow, then check preferences
         if (storedTheme) {
           initialTheme = storedTheme;
         } else if (prefersDark) {
-          initialTheme = 'dark';
+          initialTheme = 'amber-noir';
         }
 
         // Apply or remove the 'dark' class based on the initialTheme
-        if (initialTheme === 'dark') {
+        if (initialTheme === 'amber-noir') {
           document.documentElement.classList.add('dark');
         } else {
           document.documentElement.classList.remove('dark');

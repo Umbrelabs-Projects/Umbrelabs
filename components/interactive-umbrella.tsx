@@ -266,14 +266,14 @@ import * as THREE from "three"
 import { a, useSpring } from "@react-spring/web"
 
 const services = [
-  { name: "Business Solutions", icon: "💼", color: "#3b82f6", position: [-2.2, -1.5, 1.2] as [number, number, number]},
-  { name: "Technology Development", icon: "⚙️", color: "#10b981", position: [2.5, -1, -0.8] as [number, number, number] },
-  { name: "Creative Design", icon: "🎨", color: "#ec4899", position: [-1.5, -2.5, -0.3] as [number, number, number]},
-  { name: "Project Management", icon: "📋", color: "#f59e0b", position: [1.8, -2, 1.8] as [number, number, number]},
-  { name: "Data Analytics", icon: "📊", color: "#06b6d4", position: [-3, -1.2, -1.5] as [number, number, number]},
-  { name: "Digital Consulting", icon: "🤝", color: "#8b5cf6", position: [0.8, -2.8, 1] as [number, number, number]},
-  { name: "Innovation Labs", icon: "💡", color: "#eab308", position: [-1.2, -2.2, -2] as [number, number, number]},
-  { name: "Process Optimization", icon: "🔄", color: "#6b7280", position: [2.8, -1.5, 0.2] as [number, number, number]},
+  { name: "Business Solutions", icon: "💼", color: "#f59e0b", position: [-2.2, -1.5, 1.2] as [number, number, number]},
+  { name: "Technology Development", icon: "⚙️", color: "#fbbf24", position: [2.5, -1, -0.8] as [number, number, number] },
+  { name: "Creative Design", icon: "🎨", color: "#f59e0b", position: [-1.5, -2.5, -0.3] as [number, number, number]},
+  { name: "Project Management", icon: "📋", color: "#d97706", position: [1.8, -2, 1.8] as [number, number, number]},
+  { name: "Data Analytics", icon: "📊", color: "#f59e0b", position: [-3, -1.2, -1.5] as [number, number, number]},
+  { name: "Digital Consulting", icon: "🤝", color: "#fbbf24", position: [0.8, -2.8, 1] as [number, number, number]},
+  { name: "Innovation Labs", icon: "💡", color: "#d97706", position: [-1.2, -2.2, -2] as [number, number, number]},
+  { name: "Process Optimization", icon: "🔄", color: "#92400e", position: [2.8, -1.5, 0.2] as [number, number, number]},
 ]
 
 function ServiceOrb({ service, index }: { service: (typeof services)[0]; index: number }) {
@@ -445,7 +445,7 @@ function UmbrellaScene() {
         {/* Canopy (rounded + scalloped) */}
         <mesh ref={canopyRef} position={[0, 0.15, 0]} geometry={umbrellaGeometry}>
           <meshStandardMaterial
-            color="#2563eb" // nice umbrella blue
+            color="#d97706" // amber umbrella
             transparent
             opacity={0.95}
             side={THREE.DoubleSide}
@@ -479,11 +479,11 @@ function UmbrellaScene() {
         shadow-camera-top={10}
         shadow-camera-bottom={-10}
       />
-      <pointLight position={[0, 6, 0]} intensity={0.8} color="#6366f1" />
-      <pointLight position={[-5, 3, -5]} intensity={0.4} color="#ec4899" />
-      <pointLight position={[5, 3, 5]} intensity={0.4} color="#10b981" />
+      <pointLight position={[0, 6, 0]} intensity={0.8} color="#d97706" />
+      <pointLight position={[-5, 3, -5]} intensity={0.4} color="#f59e0b" />
+      <pointLight position={[5, 3, 5]} intensity={0.4} color="#fbbf24" />
 
-      <Sparkles count={50} scale={[8, 6, 8]} size={2} speed={0.3} opacity={0.6} color="#6366f1" />
+      <Sparkles count={50} scale={[8, 6, 8]} size={2} speed={0.3} opacity={0.6} color="#d97706" />
 
       <Environment preset="sunset" background={false} />
 
@@ -503,8 +503,8 @@ function UmbrellaScene() {
 
 export default function InteractiveUmbrella() {
   return (
-    <div className="h-[600px] w-full max-w-2xl relative">
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-100/20 to-purple-100/20 rounded-3xl blur-3xl"></div>
+    <div className="h-full w-full relative">
+      <div className="absolute inset-0 bg-gradient-to-br from-amber-100/20 to-yellow-100/20 rounded-3xl blur-3xl"></div>
       <Canvas
         camera={{ position: [0, 0, 10], fov: 50 }}
         style={{ background: "transparent" }}

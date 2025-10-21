@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Menu, X, Home, Zap, Users, Rocket, Box, Sun, Moon } from "lucide-react"
+import { Menu, X, Home, Zap, Users, Rocket, Sun, Moon } from "lucide-react"
 import { useTheme } from "./theme-provider"
+import Image from "next/image"
 
 const navigationItems = [
   { name: "Home", href: "#hero", icon: Home },
@@ -71,13 +72,15 @@ export default function Navigation() {
           <div className="flex-shrink-0 min-w-0">
             <button onClick={() => scrollToSection("#hero")} className="flex items-center space-x-2 sm:space-x-3 group">
               <div className="relative w-8 h-8 sm:w-10 sm:h-10 group-hover:scale-110 transition-transform duration-300">
-                <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 rotate-12 group-hover:rotate-6 transition-transform duration-300" />
-                <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 -rotate-6 group-hover:rotate-0 transition-transform duration-300" />
-                <div className="relative w-full h-full rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center shadow-lg">
-                  <Box className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                </div>
+                <Image
+                  src="/logos/umbrelabs-high-resolution-logo-transparent.png"
+                  alt="Umbrelabs Logo"
+                  width={40}
+                  height={40}
+                  className="w-full h-full object-contain"
+                />
               </div>
-              <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent truncate">
+              <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent truncate">
                 Umbrelabs
               </span>
             </button>
@@ -96,7 +99,7 @@ export default function Navigation() {
                     onClick={() => scrollToSection(item.href)}
                     className={`flex items-center space-x-2 px-3 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
                       isActive
-                        ? "bg-gradient-to-r from-blue-600/20 to-purple-600/20 text-primary border border-primary/20"
+                        ? "bg-gradient-to-r from-amber-600/20 to-yellow-600/20 text-primary border border-primary/20"
                         : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/50 dark:text-slate-300 dark:hover:text-white dark:hover:bg-slate-800/50"
                     } backdrop-blur-sm hover:scale-105`}
                   >
@@ -121,7 +124,7 @@ export default function Navigation() {
                     onClick={() => scrollToSection(item.href)}
                     className={`flex items-center justify-center p-2 rounded-xl transition-all duration-300 ${
                       isActive
-                        ? "bg-gradient-to-r from-blue-600/20 to-purple-600/20 text-primary border border-primary/20"
+                        ? "bg-gradient-to-r from-amber-600/20 to-yellow-600/20 text-primary border border-primary/20"
                         : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/50 dark:text-slate-300 dark:hover:text-white dark:hover:bg-slate-800/50"
                     } backdrop-blur-sm hover:scale-105`}
                     title={item.name}
@@ -142,10 +145,10 @@ export default function Navigation() {
               className="w-10 h-10 rounded-xl border-2 hover:scale-110 transition-all duration-300 backdrop-blur-sm border-slate-300 dark:border-slate-700 bg-transparent"
             >
               {mounted ? (
-                theme === "dark" ? (
+                theme === "amber-noir" ? (
                   <Sun className="h-4 w-4 text-yellow-500" />
                 ) : (
-                  <Moon className="h-4 w-4 text-blue-600" />
+                  <Moon className="h-4 w-4 text-amber-600" />
                 )
               ) : (
                 <span className="h-4 w-4" />
@@ -154,7 +157,7 @@ export default function Navigation() {
 
             <Button
               onClick={() => scrollToSection("#cta")}
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-4 py-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 text-sm"
+              className="bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-700 hover:to-yellow-700 text-white px-4 py-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 text-sm"
             >
               Start Building
             </Button>
@@ -169,10 +172,10 @@ export default function Navigation() {
               className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl border-2 hover:scale-110 transition-all duration-300 backdrop-blur-sm border-slate-300 dark:border-slate-700 bg-transparent"
             >
               {mounted ? (
-                theme === "dark" ? (
+                theme === "amber-noir" ? (
                   <Sun className="h-4 w-4 text-yellow-500" />
                 ) : (
-                  <Moon className="h-4 w-4 text-blue-600" />
+                  <Moon className="h-4 w-4 text-amber-600" />
                 )
               ) : (
                 <span className="h-4 w-4" />
@@ -205,7 +208,7 @@ export default function Navigation() {
                   onClick={() => scrollToSection(item.href)}
                   className={`w-full flex items-center space-x-3 px-3 sm:px-4 py-2 sm:py-3 rounded-xl text-left transition-all duration-300 ${
                     isActive
-                      ? "bg-gradient-to-r from-blue-600/20 to-purple-600/20 text-primary border border-primary/20"
+                      ? "bg-gradient-to-r from-amber-600/20 to-yellow-600/20 text-primary border border-primary/20"
                       : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/50 dark:text-slate-300 dark:hover:text-white dark:hover:bg-slate-800/50"
                   }`}
                 >
@@ -218,7 +221,7 @@ export default function Navigation() {
             <div className="pt-3 sm:pt-4 border-t border-slate-200/20 dark:border-slate-700/20">
               <Button
                 onClick={() => scrollToSection("#cta")}
-                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-2 sm:py-3 shadow-lg hover:shadow-xl transition-all duration-300 text-sm sm:text-base"
+                className="w-full bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-700 hover:to-yellow-700 text-white py-2 sm:py-3 shadow-lg hover:shadow-xl transition-all duration-300 text-sm sm:text-base"
               >
                 Start Building Today
               </Button>

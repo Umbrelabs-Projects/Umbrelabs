@@ -65,7 +65,7 @@ export default function AnimatedBackground({ variant = "default" }: AnimatedBack
         ctx.beginPath()
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
         ctx.fillStyle =
-          variant === "hero" ? `rgba(99, 102, 241, ${particle.opacity})` : `rgba(147, 197, 253, ${particle.opacity})`
+          variant === "hero" ? `rgba(245, 158, 11, ${particle.opacity})` : `rgba(251, 191, 36, ${particle.opacity})`
         ctx.fill()
       })
 
@@ -85,8 +85,8 @@ export default function AnimatedBackground({ variant = "default" }: AnimatedBack
       <div
         className={`absolute inset-0 ${
           variant === "hero"
-            ? "bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-indigo-500/5"
-            : "bg-gradient-to-br from-blue-500/3 to-purple-500/3"
+            ? "bg-gradient-to-br from-amber-500/5 via-yellow-500/5 to-orange-500/5"
+            : "bg-gradient-to-br from-amber-500/3 to-yellow-500/3"
         }`}
       />
 
