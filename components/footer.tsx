@@ -49,16 +49,40 @@ export default function Footer() {
               we deliver comprehensive solutions across technology, design, and business domains.
             </p>
             <div className="flex space-x-4">
-              <Button variant="outline" size="icon" className="hover:bg-amber-50 hover:border-amber-200">
+              <Button
+                variant="outline"
+                size="icon"
+                className="hover:bg-amber-50 hover:border-amber-200"
+                onClick={() => window.open('https://facebook.com/theumbrelabs', '_blank')}
+                title="Follow us on Facebook"
+              >
                 <Facebook className="w-4 h-4" />
               </Button>
-              <Button variant="outline" size="icon" className="hover:bg-amber-50 hover:border-amber-200">
+              <Button
+                variant="outline"
+                size="icon"
+                className="hover:bg-amber-50 hover:border-amber-200"
+                onClick={() => window.open('https://twitter.com/theumbrelabs', '_blank')}
+                title="Follow us on Twitter"
+              >
                 <Twitter className="w-4 h-4" />
               </Button>
-              <Button variant="outline" size="icon" className="hover:bg-amber-50 hover:border-amber-200">
+              <Button
+                variant="outline"
+                size="icon"
+                className="hover:bg-amber-50 hover:border-amber-200"
+                onClick={() => window.open('https://linkedin.com/company/umbrelabs', '_blank')}
+                title="Connect with us on LinkedIn"
+              >
                 <Linkedin className="w-4 h-4" />
               </Button>
-              <Button variant="outline" size="icon" className="hover:bg-amber-50 hover:border-amber-200">
+              <Button
+                variant="outline"
+                size="icon"
+                className="hover:bg-amber-50 hover:border-amber-200"
+                onClick={() => window.open('https://instagram.com/theumbrelabs', '_blank')}
+                title="Follow us on Instagram"
+              >
                 <Instagram className="w-4 h-4" />
               </Button>
             </div>
