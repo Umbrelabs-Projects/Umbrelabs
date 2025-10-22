@@ -18,42 +18,23 @@ import {
 import InteractiveUmbrella from "@/components/interactive-umbrella";
 import AnimatedBackground from "@/components/animated-background";
 import Navigation from "@/components/navigation";
+import Footer from "@/components/footer";
 
-// Fallback components
-const FallbackBox = () => (
-  <div className="w-full h-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-2xl border border-border/50 flex items-center justify-center">
-    <div className="text-center">
-      <Box className="w-12 h-12 mx-auto mb-4 text-primary" />
-      <p className="text-sm text-muted-foreground">Interactive Box</p>
-    </div>
-  </div>
-);
-
-const FallbackBackground = () => (
-  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5" />
-);
-
-const FallbackNavigation = () => (
-  <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="flex justify-between items-center h-16">
-        <div className="flex items-center">
-          <Box className="w-8 h-8 text-primary" />
-          <span className="ml-2 text-xl font-bold">Umbrelabs</span>
-        </div>
-      </div>
-    </div>
-  </nav>
-);
 
 export default function TechBoxLanding() {
-  // Safe component rendering with fallbacks
   const SafeInteractiveUmbrella = () => {
     try {
       return <InteractiveUmbrella />;
     } catch (error) {
       console.error("InteractiveUmbrella failed to render:", error);
-      return <FallbackBox />;
+      return (
+        <div className="w-full h-full bg-gradient-to-br from-amber-500/20 to-yellow-500/20 rounded-2xl border border-border/50 flex items-center justify-center">
+          <div className="text-center">
+            <Box className="w-12 h-12 mx-auto mb-4 text-primary" />
+            <p className="text-sm text-muted-foreground">Interactive Umbrella</p>
+          </div>
+        </div>
+      );
     }
   };
 
@@ -62,7 +43,7 @@ export default function TechBoxLanding() {
       return <AnimatedBackground variant="hero" />;
     } catch (error) {
       console.error("AnimatedBackground failed to render:", error);
-      return <FallbackBackground />;
+      return <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-yellow-500/5" />;
     }
   };
 
@@ -71,7 +52,18 @@ export default function TechBoxLanding() {
       return <Navigation />;
     } catch (error) {
       console.error("Navigation failed to render:", error);
-      return <FallbackNavigation />;
+      return (
+        <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center h-16">
+              <div className="flex items-center">
+                <Box className="w-8 h-8 text-primary" />
+                <span className="ml-2 text-xl font-bold">Umbrelabs</span>
+              </div>
+            </div>
+          </div>
+        </nav>
+      );
     }
   };
 
@@ -105,7 +97,7 @@ export default function TechBoxLanding() {
               From concept to reality — comprehensive solutions across technology, design, business, and innovation. Everything you need, delivered from one trusted lab.{" "}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 sm:justify-center md:justify-start w-full">
-              <Link href="#cta" className="w-full sm:w-auto">
+              <Link href="/contact" className="w-full sm:w-auto">
                 <Button className="w-full sm:w-auto bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-700 hover:to-yellow-700 text-white px-6 md:px-8 py-3 text-base md:text-lg shadow-lg hover:shadow-xl transition-all duration-300">
                   Get Started
                 </Button>
@@ -316,22 +308,26 @@ export default function TechBoxLanding() {
                 Let's transform your vision into reality — comprehensive solutions for every challenge, delivered from one innovative lab.
               </p>
               <div className="space-y-4">
-                <Button className="w-full bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-700 hover:to-yellow-700 text-white px-8 py-4 text-lg group shadow-lg hover:shadow-xl transition-all duration-300">
-                  Book a Free Strategy Call
-                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <Button asChild className="w-full bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-700 hover:to-yellow-700 text-white px-8 py-4 text-lg group shadow-lg hover:shadow-xl transition-all duration-300">
+                  <Link href="/contact">
+                    Book a Free Strategy Call
+                    <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
                 </Button>
 
-                <Button
-                  variant="outline"
-                  className="w-full px-8 py-4 text-lg backdrop-blur-sm hover:bg-accent/50 bg-transparent"
-                >
-                  View Our Portfolio
+                <Button asChild variant="outline" className="w-full px-8 py-4 text-lg backdrop-blur-sm hover:bg-accent/50 bg-transparent">
+                  <Link href="/portfolio">
+                    View Our Portfolio
+                  </Link>
                 </Button>
               </div>
             </div>
           </div>
         </section>
       </div>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }
