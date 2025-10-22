@@ -176,7 +176,7 @@ export default function Navigation() {
 
             <Button
               onClick={() => {
-                // Check current page and navigate to appropriate CTA section
+                // Check current page and navigate to the appropriate CTA section
                 const currentPath = window.location.pathname
                 if (currentPath === "/") {
                   navigateToPage("#cta")
