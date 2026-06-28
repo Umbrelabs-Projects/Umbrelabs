@@ -1,281 +1,184 @@
 "use client"
 
+import { useState } from "react"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import {
-  ArrowLeft,
-  ExternalLink,
-  Calendar,
-  Users,
-  Target,
-  TrendingUp,
-  Smartphone,
-  Globe,
-  Database,
-  Palette,
-  ArrowRight
-} from "lucide-react"
 import Navigation from "@/components/navigation"
-import AnimatedBackground from "@/components/animated-background"
 import Footer from "@/components/footer"
-import Image from "next/image"
+import Reveal from "@/components/reveal"
+
+const categories = ["All Work", "Technical Engineering", "Creative Design", "Process Optimisation", "Network Ops"]
+
+const projects = [
+  {
+    id: "01",
+    category: "Network Ops",
+    title: "Neural Node Expansion",
+    desc: "Architecture and deployment of a low-latency global edge network for a tier-one financial institution, achieving exceptional uptime through custom redundancy protocols.",
+    tech: ["AWS", "Rust", "Kubernetes"],
+    result: "99.999% uptime",
+    from: "#1a160e",
+    to: "#4a3a12",
+    wide: true,
+  },
+  {
+    id: "02",
+    category: "Process Optimisation",
+    title: "LogicStream Core",
+    desc: "Refactoring internal data pipelines for a leading logistics provider, cutting processing overhead substantially.",
+    tech: ["Python", "Kafka"],
+    result: "−40% overhead",
+    from: "#0b3b38",
+    to: "#0b6b63",
+  },
+  {
+    id: "03",
+    category: "Creative Design",
+    title: "Aether UI System",
+    desc: "A high-fidelity design language for a decentralised cloud computing interface.",
+    tech: ["Figma", "React", "Three.js"],
+    result: "9.8 experience score",
+    from: "#2a1633",
+    to: "#5b3a78",
+  },
+  {
+    id: "04",
+    category: "Technical Engineering",
+    title: "Sentinel OS",
+    desc: "A custom operating layer for industrial automation hardware, focused on secure real-time monitoring.",
+    tech: ["Rust", "WASM", "Linux"],
+    result: "Sub-1ms latency",
+    from: "#13110a",
+    to: "#3a2f12",
+  },
+  {
+    id: "05",
+    category: "Technical Engineering",
+    title: "Secured Support Mesh",
+    desc: "A multi-tiered, zero-trust technical support infrastructure for global software operations.",
+    tech: ["Zero-Trust", "AES-256"],
+    result: "100% compliance",
+    from: "#10221f",
+    to: "#27514c",
+  },
+]
 
 export default function PortfolioPage() {
-  const projects = [
-    {
-      id: 1,
-      title: "E-Commerce Revolution",
-      category: "Technology Development",
-      client: "RetailTech Solutions",
-      description: "Complete digital transformation for a traditional retail chain, including custom e-commerce platform, inventory management system, and customer analytics dashboard.",
-      image: "/placeholder.jpg",
-      technologies: ["React", "Node.js", "PostgreSQL", "AWS"],
-      duration: "6 months",
-      team: "8 members",
-      results: ["300% increase in online sales", "50% reduction in operational costs", "95% customer satisfaction"],
-      icon: Globe
-    },
-    {
-      id: 2,
-      title: "Healthcare Management Platform",
-      category: "Business Solutions",
-      client: "MedCare Systems",
-      description: "Comprehensive healthcare management platform with patient records, appointment scheduling, telemedicine integration, and compliance reporting.",
-      image: "/placeholder.jpg",
-      technologies: ["React", "Python", "MongoDB", "Docker"],
-      duration: "8 months",
-      team: "12 members",
-      results: ["HIPAA compliant", "Reduced patient wait times by 40%", "Integrated with 50+ clinics"],
-      icon: Database
-    },
-    {
-      id: 3,
-      title: "Brand Identity & Mobile App",
-      category: "Creative Design",
-      client: "FitLife Nutrition",
-      description: "Complete brand redesign including logo, packaging, website, and companion mobile app for personalized nutrition tracking.",
-      image: "/placeholder.jpg",
-      technologies: ["React Native", "Firebase", "Figma", "Adobe Creative Suite"],
-      duration: "4 months",
-      team: "6 members",
-      results: ["150K+ app downloads", "Brand recognition increased by 200%", "4.8/5 app store rating"],
-      icon: Smartphone
-    },
-    {
-      id: 4,
-      title: "Financial Analytics Dashboard",
-      category: "Data Analytics",
-      client: "Capital Insights",
-      description: "Real-time financial analytics platform with predictive modeling, risk assessment, and automated reporting for investment firms.",
-      image: "/placeholder.jpg",
-      technologies: ["Python", "TensorFlow", "D3.js", "PostgreSQL"],
-      duration: "5 months",
-      team: "7 members",
-      results: ["99.9% uptime", "Reduced analysis time by 75%", "ROI of 350% in first year"],
-      icon: TrendingUp
-    },
-    {
-      id: 5,
-      title: "Smart City Infrastructure",
-      category: "Innovation Labs",
-      client: "MetroTech City",
-      description: "IoT-based smart city infrastructure including traffic management, environmental monitoring, and citizen engagement platform.",
-      image: "/placeholder.jpg",
-      technologies: ["IoT", "Machine Learning", "React", "Kubernetes"],
-      duration: "12 months",
-      team: "15 members",
-      results: ["25% reduction in traffic congestion", "30% improvement in air quality", "City-wide deployment"],
-      icon: Target
-    },
-    {
-      id: 6,
-      title: "Educational Platform Redesign",
-      category: "Digital Consulting",
-      client: "LearnHub Academy",
-      description: "Complete platform redesign with modern UX, gamification features, progress tracking, and integration with learning management systems.",
-      image: "/placeholder.jpg",
-      technologies: ["Vue.js", "Laravel", "MySQL", "Redis"],
-      duration: "7 months",
-      team: "9 members",
-      results: ["Student engagement up 180%", "Completion rates improved by 60%", "Expanded to 10 countries"],
-      icon: Users
-    }
-  ]
-
-  const stats = [
-    { label: "Projects Completed", value: "150+", icon: Target },
-    { label: "Happy Clients", value: "98%", icon: Users },
-    { label: "Team Members", value: "50+", icon: Users },
-    { label: "Years Experience", value: "8+", icon: Calendar }
-  ]
+  const [active, setActive] = useState("All Work")
+  const filtered = active === "All Work" ? projects : projects.filter((p) => p.category === active)
 
   return (
-    <div className="min-h-screen bg-background relative">
-      {/* Background */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <AnimatedBackground variant="default" />
-      </div>
-
+    <div className="min-h-screen flex flex-col text-on-surface overflow-x-hidden bg-background">
       <Navigation />
 
-      {/* Hero Section */}
-      <section className="pt-20 pb-16 px-4 sm:px-6 md:px-8 lg:px-16 bg-gradient-to-br from-amber-50/50 to-yellow-50/50 dark:from-amber-950/20 dark:to-yellow-950/20">
-        <div className="max-w-screen-2xl mx-auto">
-          <div className="text-center mb-12">
-            <Link href="/" className="inline-flex items-center text-muted-foreground hover:text-primary mb-6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Home
-            </Link>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
-              Our
-              <span className="text-primary bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent block">
-                Portfolio
-              </span>
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Discover how we've helped businesses across industries transform their vision into reality.
-              Each project represents our commitment to excellence and innovation.
-            </p>
+      <main className="grow">
+        {/* ─────────────── Hero ─────────────── */}
+        <section className="relative px-5 sm:px-8 pt-40 pb-16 md:pt-48">
+          <div className="ambient-orb" style={{ width: "560px", height: "560px", top: "-160px", right: "-120px", background: "radial-gradient(circle, rgba(255,191,0,0.13), transparent 70%)" }} />
+          <div className="relative max-w-[1240px] mx-auto">
+            <Reveal>
+              <span className="eyebrow">Client stories</span>
+            </Reveal>
+            <Reveal delay={80}>
+              <h1 className="text-display text-on-surface mt-6 max-w-4xl" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)" }}>
+                Engineering the{" "}
+                <span className="serif-italic text-gold">next frontier</span>.
+              </h1>
+            </Reveal>
+            <Reveal delay={160}>
+              <p className="text-body-lg text-on-surface-variant max-w-2xl mt-8">
+                A selection of high-performance technical solutions and creative
+                architectures delivered for global industry leaders.
+              </p>
+            </Reveal>
           </div>
+        </section>
 
-          {/* Stats */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-            {stats.map((stat, index) => {
-              const Icon = stat.icon
-              return (
-                <Card key={index} className="p-6 text-center border-border/50">
-                  <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-yellow-500 rounded-lg flex items-center justify-center mx-auto mb-4">
-                    <Icon className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="text-2xl font-bold text-primary mb-1">{stat.value}</div>
-                  <div className="text-sm text-muted-foreground">{stat.label}</div>
-                </Card>
-              )
-            })}
+        {/* ─────────────── Filter ─────────────── */}
+        <section className="px-5 sm:px-8 pb-12">
+          <div className="max-w-[1240px] mx-auto flex flex-wrap gap-2.5 pt-8 border-t border-outline-variant/60">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActive(cat)}
+                className={`px-4 py-2 rounded-full text-sm transition-all press-scale border ${
+                  active === cat
+                    ? "bg-on-surface text-background border-on-surface"
+                    : "border-outline-variant text-on-surface-variant hover:text-on-surface hover:border-on-surface/40"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Projects Grid */}
-      <section className="py-16 px-4 sm:px-6 md:px-8 lg:px-16">
-        <div className="max-w-screen-2xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project) => {
-              const Icon = project.icon
-              return (
-                <Card key={project.id} className="group overflow-hidden border-border/50 hover:shadow-xl transition-all duration-300 hover:scale-105 relative">
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                    <div className="absolute top-16 left-12 w-2 h-2 bg-amber-400 rounded-full animate-ping"></div>
-                    <div className="absolute top-8 right-16 w-1.5 h-1.5 bg-yellow-400 rounded-full animate-pulse delay-100"></div>
-                    <div className="absolute top-1/3 left-8 w-2.5 h-2.5 bg-amber-300 rounded-full animate-bounce delay-200"></div>
-                    <div className="absolute bottom-16 right-12 w-1 h-1 bg-yellow-500 rounded-full animate-pulse delay-300"></div>
-                    <div className="absolute top-2/3 right-8 w-1.5 h-1.5 bg-amber-500 rounded-full animate-ping delay-400"></div>
-                    <div className="absolute bottom-8 left-16 w-2 h-2 bg-yellow-300 rounded-full animate-bounce delay-500"></div>
-                    <div className="absolute top-12 left-1/3 w-1 h-1 bg-amber-400 rounded-full animate-pulse delay-600"></div>
-                    <div className="absolute bottom-12 right-1/4 w-2.5 h-2.5 bg-yellow-400 rounded-full animate-ping delay-700"></div>
-                  </div>
-                  {/* Project Image */}
-                  <div className="relative h-48 bg-gradient-to-br from-amber-100 to-yellow-100 dark:from-amber-900/20 dark:to-yellow-900/20">
+        {/* ─────────────── Grid ─────────────── */}
+        <section className="px-5 sm:px-8 pb-24">
+          <div className="max-w-[1240px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-5">
+            {filtered.map((p, i) => (
+              <Reveal key={p.id} delay={i * 70} className={p.wide ? "md:col-span-2" : ""}>
+                <Link href="/contact" className="card-elegant group block overflow-hidden h-full">
+                  <div
+                    className={`relative overflow-hidden ${p.wide ? "aspect-21/9" : "aspect-16/10"}`}
+                    style={{ background: `linear-gradient(135deg, ${p.from}, ${p.to})` }}
+                  >
+                    <div
+                      className="absolute inset-0 opacity-[0.07]"
+                      style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)", backgroundSize: "36px 36px" }}
+                    />
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <Icon className="w-16 h-16 text-amber-500" />
+                      <span className="number-serif text-white/12 text-[8rem] leading-none">{p.id}</span>
                     </div>
-                    <div className="absolute top-4 left-4">
-                      <Badge variant="secondary" className="bg-white/90 text-foreground">
-                        {project.category}
-                      </Badge>
-                    </div>
+                    <span className="absolute top-5 left-5 text-xs uppercase tracking-widest text-white/85 bg-black/20 backdrop-blur-sm px-3 py-1.5 rounded-full">
+                      {p.category}
+                    </span>
+                    <span className="absolute bottom-5 right-5 text-sm text-white/90 bg-black/25 backdrop-blur-sm px-3 py-1.5 rounded-full">
+                      {p.result}
+                    </span>
                   </div>
-
-                  {/* Project Content */}
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-muted-foreground mb-4 line-clamp-3">
-                      {project.description}
-                    </p>
-
-                    {/* Project Details */}
-                    <div className="space-y-3 mb-4">
-                      <div className="flex items-center text-sm text-muted-foreground">
-                        <Users className="w-4 h-4 mr-2" />
-                        {project.client}
-                      </div>
-                      <div className="flex items-center text-sm text-muted-foreground">
-                        <Calendar className="w-4 h-4 mr-2" />
-                        {project.duration} • {project.team}
-                      </div>
-                    </div>
-
-                    {/* Technologies */}
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {project.technologies.slice(0, 3).map((tech) => (
-                        <Badge key={tech} variant="outline" className="text-xs">
-                          {tech}
-                        </Badge>
-                      ))}
-                      {project.technologies.length > 3 && (
-                        <Badge variant="outline" className="text-xs">
-                          +{project.technologies.length - 3} more
-                        </Badge>
-                      )}
-                    </div>
-
-                    {/* Results */}
-                    <div className="mb-4">
-                      <h4 className="font-semibold text-sm mb-2">Key Results:</h4>
-                      <ul className="text-sm text-muted-foreground space-y-1">
-                        {project.results.slice(0, 2).map((result, index) => (
-                          <li key={index} className="flex items-center">
-                            <div className="w-1.5 h-1.5 bg-amber-500 rounded-full mr-2 flex-shrink-0" />
-                            {result}
-                          </li>
+                  <div className="p-8 lg:p-10">
+                    <h3 className="text-h2 text-on-surface">{p.title}</h3>
+                    <p className="text-body-md text-on-surface-variant mt-3 leading-relaxed max-w-2xl">{p.desc}</p>
+                    <div className="mt-6 flex items-center justify-between gap-4">
+                      <div className="flex flex-wrap gap-2">
+                        {p.tech.map((t) => (
+                          <span key={t} className="text-xs px-3 py-1 rounded-full border border-outline-variant text-on-surface-variant">
+                            {t}
+                          </span>
                         ))}
-                      </ul>
+                      </div>
+                      <span className="link-underline text-on-surface font-medium shrink-0">
+                        View case study
+                        <span className="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                      </span>
                     </div>
-
-                    {/* CTA */}
-                    <Button variant="outline" className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                      View Case Study
-                      <ExternalLink className="w-4 h-4 ml-2" />
-                    </Button>
                   </div>
-                </Card>
-              )
-            })}
+                </Link>
+              </Reveal>
+            ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* CTA Section */}
-      <section className="py-16 px-4 sm:px-6 md:px-8 lg:px-16 bg-gradient-to-r from-amber-50 to-yellow-50 dark:from-amber-950/20 dark:to-yellow-950/20">
-        <div className="max-w-screen-2xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-6">
-            Ready to Create Your Success Story?
-          </h2>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Join the growing list of businesses that have transformed their operations with Umbrelabs.
-            Let's discuss how we can help bring your vision to life.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-700 hover:to-yellow-700">
-              <Link href="/contact">
-                Start Your Project
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Link>
-            </Button>
-            <Button asChild variant="outline" size="lg">
-              <Link href="/contact">
-                Book Free Consultation
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
+        {/* ─────────────── CTA ─────────────── */}
+        <section className="px-5 sm:px-8 pb-24">
+          <Reveal className="max-w-[1240px] mx-auto">
+            <div className="relative overflow-hidden rounded-[1.75rem] bg-inverse-surface text-inverse-on-surface px-8 py-20 md:px-16 md:py-24 text-center">
+              <div className="ambient-orb" style={{ width: "520px", height: "520px", bottom: "-280px", left: "50%", transform: "translateX(-50%)", background: "radial-gradient(circle, rgba(255,191,0,0.2), transparent 70%)" }} />
+              <div className="relative">
+                <h2 className="text-h1">Ready to build your story?</h2>
+                <p className="text-body-lg opacity-80 max-w-xl mx-auto mt-6">
+                  Let's discuss how our studio can transform your technical landscape.
+                </p>
+                <Link href="/contact" className="inline-flex items-center gap-2 mt-10 bg-primary-container text-on-primary-container px-8 py-4 rounded-full font-medium hover:brightness-105 transition-all press-scale">
+                  Start a conversation
+                  <span className="material-symbols-outlined text-[18px]">arrow_outward</span>
+                </Link>
+              </div>
+            </div>
+          </Reveal>
+        </section>
+      </main>
 
-      {/* Footer */}
       <Footer />
     </div>
   )

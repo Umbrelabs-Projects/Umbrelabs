@@ -1,333 +1,266 @@
-"use client";
+import Link from "next/link"
+import Navigation from "@/components/navigation"
+import Footer from "@/components/footer"
+import Reveal from "@/components/reveal"
 
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import {
-  Box,
-  Smartphone,
-  Palette,
-  Mic,
-  Shield,
-  Database,
-  Wrench,
-  FileText,
-  CheckCircle,
-  ArrowRight,
-} from "lucide-react";
-import InteractiveUmbrella from "@/components/interactive-umbrella";
-import AnimatedBackground from "@/components/animated-background";
-import Navigation from "@/components/navigation";
-import Footer from "@/components/footer";
+const services = [
+  { icon: "code", title: "Technology Development", desc: "High-performance software, distributed systems, and cloud-native architecture engineered to scale." },
+  { icon: "draw", title: "Creative Design", desc: "Human-centred interfaces and identity systems crafted for clarity, emotion, and longevity." },
+  { icon: "insights", title: "Data & Analytics", desc: "Turning complex data into decisions through modelling, engineering, and machine learning." },
+  { icon: "hub", title: "Digital Consulting", desc: "Strategic guidance for digital transformation, technical due diligence, and modernisation." },
+]
 
+const steps = [
+  { n: "01", title: "Discover", desc: "We immerse ourselves in your goals, constraints, and users to define what truly matters." },
+  { n: "02", title: "Architect", desc: "We design the system and experience — pragmatic blueprints built for resilience and scale." },
+  { n: "03", title: "Build", desc: "We engineer with rigour and craft, shipping in tight, transparent, measurable iterations." },
+  { n: "04", title: "Evolve", desc: "We monitor, refine, and extend — treating launch as the beginning, not the destination." },
+]
 
-export default function TechBoxLanding() {
-  const SafeInteractiveUmbrella = () => {
-    try {
-      return <InteractiveUmbrella />;
-    } catch (error) {
-      console.error("InteractiveUmbrella failed to render:", error);
-      return (
-        <div className="w-full h-full bg-gradient-to-br from-amber-500/20 to-yellow-500/20 rounded-2xl border border-border/50 flex items-center justify-center">
-          <div className="text-center">
-            <Box className="w-12 h-12 mx-auto mb-4 text-primary" />
-            <p className="text-sm text-muted-foreground">Interactive Umbrella</p>
-          </div>
-        </div>
-      );
-    }
-  };
+const stats = [
+  { value: "128+", label: "Systems deployed" },
+  { value: "99.99%", label: "Uptime delivered" },
+  { value: "50+", label: "Global clients" },
+  { value: "8+", label: "Years of practice" },
+]
 
-  const SafeAnimatedBackground = () => {
-    try {
-      return <AnimatedBackground variant="hero" />;
-    } catch (error) {
-      console.error("AnimatedBackground failed to render:", error);
-      return <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-yellow-500/5" />;
-    }
-  };
+const work = [
+  { id: "01", title: "Neural Node Expansion", cat: "Network Operations", result: "99.999% uptime", from: "#1a160e", to: "#3a2f12" },
+  { id: "03", title: "Aether UI System", cat: "Creative Design", result: "9.8 experience score", from: "#0b3b38", to: "#0b6b63" },
+]
 
-  const SafeNavigation = () => {
-    try {
-      return <Navigation />;
-    } catch (error) {
-      console.error("Navigation failed to render:", error);
-      return (
-        <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-16">
-              <div className="flex items-center">
-                <Box className="w-8 h-8 text-primary" />
-                <span className="ml-2 text-xl font-bold">Umbrelabs</span>
-              </div>
-            </div>
-          </div>
-        </nav>
-      );
-    }
-  };
-
+export default function HomePage() {
   return (
-    <div className="min-h-screen bg-background text-foreground relative w-full">
-      {/* Background fixed and restored */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <SafeAnimatedBackground />
-      </div>
+    <div className="min-h-screen flex flex-col text-on-surface overflow-x-hidden bg-background">
+      <Navigation />
 
-      {/* Navigation */}
-      <SafeNavigation />
+      <main className="grow">
+        {/* ─────────────── Hero ─────────────── */}
+        <section className="relative px-5 sm:px-8 pt-40 pb-24 md:pt-48 md:pb-32">
+          <div className="ambient-orb" style={{ width: "640px", height: "640px", top: "-180px", right: "-120px", background: "radial-gradient(circle, rgba(255,191,0,0.16), transparent 70%)" }} />
+          <div className="ambient-orb" style={{ width: "520px", height: "520px", top: "40px", left: "-200px", background: "radial-gradient(circle, rgba(11,107,99,0.10), transparent 70%)" }} />
 
-      <div className="relative z-10 w-full">
-        {/* Hero Section - Reduced from min-h-screen to optimized height */}
-        <section
-          id="hero"
-          className="min-h-screen max-h-[1000px] flex flex-col md:flex-row items-center justify-center md:justify-between gap-6 md:gap-8 px-4 sm:px-6 md:px-8 lg:px-16 pt-20 pb-8 text-center md:text-left max-w-screen-2xl mx-auto"
-        >
-          <div className="flex-1 max-w-2xl w-full">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 md:mb-4 leading-tight">
-              Covering Your Vision.
-              <br />
-              <span className="text-primary bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent">
-                Crafting Your Solution
+          <div className="relative max-w-[920px] mx-auto text-center">
+            <Reveal>
+              <span className="eyebrow inline-flex items-center gap-2">
+                <span className="w-6 h-px bg-primary/50" />
+                Multi-disciplinary technology studio
+                <span className="w-6 h-px bg-primary/50" />
               </span>
-              <br />
-              with Umbrelabs
-            </h1>
-            <p className="text-muted-foreground text-base sm:text-lg mb-4 md:mb-6 max-w-lg mx-auto md:mx-0">
-              From concept to reality — comprehensive solutions across technology, design, business, and innovation. Everything you need, delivered from one trusted lab.{" "}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 sm:justify-center md:justify-start w-full">
-              <Link href="/contact" className="w-full sm:w-auto">
-                <Button className="w-full sm:w-auto bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-700 hover:to-yellow-700 text-white px-6 md:px-8 py-3 text-base md:text-lg shadow-lg hover:shadow-xl transition-all duration-300">
-                  Get Started
-                </Button>
-              </Link>
-              <Link href="#services" className="w-full sm:w-auto">
-                <Button
-                  variant="outline"
-                  className="w-full sm:w-auto px-6 md:px-8 py-3 text-base md:text-lg backdrop-blur-sm hover:bg-accent/50 bg-transparent"
-                >
-                  See Services
-                </Button>
-              </Link>
-            </div>
-          </div>
+            </Reveal>
 
-          <div className="flex-1 flex justify-center items-center w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl">
-            <div className="w-full max-w-[400px] sm:max-w-[450px] md:max-w-[500px] h-[400px] sm:h-[450px] md:h-[500px]">
-              <SafeInteractiveUmbrella />
-            </div>
-          </div>
-        </section>
+            <Reveal delay={80}>
+              <h1 className="text-display text-on-surface mt-7">
+                Engineering the future
+                <br className="hidden sm:block" /> of technology, with{" "}
+                <span className="serif-italic text-gold">craft</span>.
+              </h1>
+            </Reveal>
 
-        {/* Services Section - Reduced padding */}
-        <section
-          id="services"
-          className="py-8 md:py-12 px-4 sm:px-6 md:px-8 lg:px-16"
-        >
-          <div className="max-w-screen-2xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 text-center">
-              Comprehensive Solutions
-            </h2>
-            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary mb-8 md:mb-10 bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent text-center">
-              Across All Domains
-            </h3>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-              {[
-                {
-                  icon: Box,
-                  title: "Business Solutions",
-                  desc: "Strategic consulting",
-                  color: "from-amber-500 to-yellow-500",
-                },
-                {
-                  icon: Smartphone,
-                  title: "Technology Development",
-                  desc: "Custom tech solutions",
-                  color: "from-amber-400 to-orange-500",
-                },
-                {
-                  icon: Palette,
-                  title: "Creative Design",
-                  desc: "Brand & digital design",
-                  color: "from-yellow-500 to-amber-600",
-                },
-                {
-                  icon: Wrench,
-                  title: "Project Management",
-                  desc: "End-to-end delivery",
-                  color: "from-amber-600 to-orange-600",
-                },
-                {
-                  icon: Database,
-                  title: "Data Analytics",
-                  desc: "Insights & intelligence",
-                  color: "from-yellow-400 to-amber-500",
-                },
-                {
-                  icon: Shield,
-                  title: "Digital Consulting",
-                  desc: "Strategic guidance",
-                  color: "from-amber-500 to-yellow-600",
-                },
-                {
-                  icon: Mic,
-                  title: "Innovation Labs",
-                  desc: "Future-ready solutions",
-                  color: "from-orange-500 to-amber-600",
-                },
-                {
-                  icon: FileText,
-                  title: "Process Optimization",
-                  desc: "Efficiency & growth",
-                  color: "from-amber-600 to-yellow-700",
-                },
-              ].map((service, index) => (
-                <Card
-                  key={index}
-                  className="bg-card/80 backdrop-blur-sm border-border p-4 md:p-5 hover:bg-accent/50 transition-all duration-300 cursor-pointer group hover:scale-105 hover:shadow-xl"
-                >
-                  <div
-                    className={`w-10 h-10 md:w-12 md:h-12 rounded-lg bg-gradient-to-r ${service.color} p-2 mb-3 group-hover:scale-110 transition-transform`}
-                  >
-                    <service.icon className="w-6 h-6 md:w-8 md:h-8 text-white" />
-                  </div>
-                  <h4 className="font-semibold mb-2 text-sm md:text-base">
-                    {service.title}
-                  </h4>
-                  <p className="text-muted-foreground text-xs md:text-sm">
-                    {service.desc}
-                  </p>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Benefits Section - Reduced padding */}
-        <section
-          id="benefits"
-          className="py-8 md:py-12 px-4 sm:px-6 md:px-8 lg:px-16"
-        >
-          <div className="max-w-screen-2xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 md:mb-8 text-center md:text-left">
-              Why Choose Umbrelabs?
-            </h2>
-
-            <div className="space-y-3 md:space-y-4">
-              {[
-                {
-                  text: "One-stop solution — no need to juggle vendors",
-                  icon: "📦",
-                },
-                {
-                  text: "Scalable teams for startups and enterprises",
-                  icon: "🚀",
-                },
-                { text: "Transparent pricing and fast delivery", icon: "⚡" },
-                { text: "Always up-to-date with latest tech", icon: "🔄" },
-              ].map((point, index) => (
-                <div
-                  key={index}
-                  className="flex items-center gap-3 md:gap-4 group p-3 md:p-4 rounded-lg hover:bg-accent/30 transition-all duration-300"
-                >
-                  <div className="text-xl md:text-2xl group-hover:scale-125 transition-transform flex-shrink-0">
-                    {point.icon}
-                  </div>
-                  <CheckCircle className="w-5 h-5 md:w-6 md:h-6 text-green-500 flex-shrink-0 group-hover:scale-110 transition-transform" />
-                  <p className="text-base md:text-lg text-muted-foreground">
-                    {point.text}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* CTA Section - Reduced padding */}
-        <section
-          id="cta"
-          className="py-8 md:py-12 px-4 sm:px-6 md:px-8 lg:px-16"
-        >
-          <div className="max-w-screen-2xl mx-auto grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
-            <div>
-              <h2 className="text-2xl sm:text-3xl font-bold mb-4 md:mb-6 text-center lg:text-left">
-                How Umbrelabs Works
-              </h2>
-
-              <div className="space-y-4 md:space-y-6">
-                {[
-                  {
-                    title: "Tell Us What You Need",
-                    desc: "We'll listen and understand your goals.",
-                    icon: "💬",
-                    step: "01",
-                  },
-                  {
-                    title: "We Match You With Experts",
-                    desc: "Top-tier tech talent for your project.",
-                    icon: "🤝",
-                    step: "02",
-                  },
-                  {
-                    title: "Deliver, Launch, and Support",
-                    desc: "We stay with you from launch to scale.",
-                    icon: "🚀",
-                    step: "03",
-                  },
-                ].map((item, index) => (
-                  <div
-                    key={index}
-                    className="flex items-start gap-4 md:gap-5 p-4 md:p-5 rounded-xl bg-card/50 backdrop-blur-sm hover:bg-card/70 transition-all duration-300"
-                  >
-                    <div className="flex-shrink-0">
-                      <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-r from-amber-600 to-yellow-600 flex items-center justify-center text-white font-bold text-sm md:text-base">
-                        {item.step}
-                      </div>
-                    </div>
-                    <div>
-                      <h3 className="text-lg md:text-xl font-semibold mb-2 text-primary flex items-center gap-2">
-                        <span>{item.icon}</span>
-                        {item.title}
-                      </h3>
-                      <p className="text-sm md:text-base text-muted-foreground">
-                        {item.desc}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="flex flex-col justify-center">
-              <h2 className="text-2xl sm:text-3xl font-bold mb-4 md:mb-6 text-center lg:text-left">
-                Start Building Today
-              </h2>
-              <p className="text-muted-foreground mb-4 md:mb-6 text-base md:text-lg text-center lg:text-left">
-                Let's transform your vision into reality — comprehensive solutions for every challenge, delivered from one innovative lab.
+            <Reveal delay={160}>
+              <p className="text-body-lg text-on-surface-variant max-w-2xl mx-auto mt-8">
+                Umbrelabs partners with ambitious organisations to design, build, and
+                evolve resilient digital systems — uniting deep engineering with
+                considered design and clear strategy.
               </p>
-              <div className="space-y-4">
-                <Button asChild className="w-full bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-700 hover:to-yellow-700 text-white px-8 py-4 text-lg group shadow-lg hover:shadow-xl transition-all duration-300">
-                  <Link href="/contact">
-                    Book a Free Strategy Call
-                    <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                </Button>
+            </Reveal>
 
-                <Button asChild variant="outline" className="w-full px-8 py-4 text-lg backdrop-blur-sm hover:bg-accent/50 bg-transparent">
-                  <Link href="/portfolio">
-                    View Our Portfolio
-                  </Link>
-                </Button>
+            <Reveal delay={240}>
+              <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 bg-on-surface text-background px-7 py-3.5 rounded-full font-medium hover:opacity-90 transition-all press-scale"
+                >
+                  Start a project
+                  <span className="material-symbols-outlined text-[18px]">arrow_outward</span>
+                </Link>
+                <Link
+                  href="/portfolio"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-medium border border-outline-variant text-on-surface hover:border-on-surface/40 hover:bg-on-surface/5 transition-all press-scale"
+                >
+                  View our work
+                </Link>
               </div>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* ─────────────── Trusted by ─────────────── */}
+        <section className="px-5 sm:px-8 pb-20">
+          <Reveal className="max-w-[1080px] mx-auto">
+            <p className="text-center text-label-caps uppercase text-on-surface-variant/70 mb-8">
+              Trusted by forward-thinking organisations
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
+              {["Quantum Core", "Neural Networks", "Cyber Defense", "Strata Systems", "Nexus Labs"].map((name) => (
+                <span
+                  key={name}
+                  className="text-xl md:text-2xl text-on-surface/35 hover:text-on-surface/70 transition-colors"
+                  style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500 }}
+                >
+                  {name}
+                </span>
+              ))}
+            </div>
+          </Reveal>
+        </section>
+
+        {/* ─────────────── Services ─────────────── */}
+        <section className="px-5 sm:px-8 py-24 border-t border-outline-variant/60">
+          <div className="max-w-[1240px] mx-auto">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+              <Reveal className="max-w-2xl">
+                <span className="eyebrow">What we do</span>
+                <h2 className="text-h1 text-on-surface mt-4">
+                  Capabilities that span the<br className="hidden lg:block" /> entire product lifecycle.
+                </h2>
+              </Reveal>
+              <Reveal delay={120}>
+                <Link href="/services" className="link-underline text-on-surface font-medium shrink-0">
+                  All services
+                  <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+                </Link>
+              </Reveal>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {services.map((s, i) => (
+                <Reveal key={s.title} delay={i * 90}>
+                  <Link
+                    href="/services"
+                    className="card-elegant group block p-8 lg:p-10 h-full"
+                  >
+                    <div className="flex items-start justify-between">
+                      <span className="material-symbols-outlined text-[34px] text-gold" style={{ fontVariationSettings: "'wght' 300" }}>
+                        {s.icon}
+                      </span>
+                      <span className="material-symbols-outlined text-on-surface-variant/40 group-hover:text-gold group-hover:translate-x-1 group-hover:-translate-y-1 transition-all">
+                        arrow_outward
+                      </span>
+                    </div>
+                    <h3 className="text-h3 text-on-surface mt-6">{s.title}</h3>
+                    <p className="text-body-md text-on-surface-variant mt-3 leading-relaxed">{s.desc}</p>
+                  </Link>
+                </Reveal>
+              ))}
             </div>
           </div>
         </section>
-      </div>
 
-      {/* Footer */}
+        {/* ─────────────── Approach ─────────────── */}
+        <section className="px-5 sm:px-8 py-24 bg-surface border-y border-outline-variant/60">
+          <div className="max-w-[1240px] mx-auto">
+            <Reveal className="max-w-2xl mb-16">
+              <span className="eyebrow">How we work</span>
+              <h2 className="text-h1 text-on-surface mt-4">A considered process, end to end.</h2>
+            </Reveal>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
+              {steps.map((step, i) => (
+                <Reveal key={step.n} delay={i * 90}>
+                  <div className="relative">
+                    <span className="number-serif text-gold text-2xl">{step.n}</span>
+                    <div className="h-px w-full bg-outline-variant/70 my-5" />
+                    <h3 className="text-h3 text-on-surface">{step.title}</h3>
+                    <p className="text-body-md text-on-surface-variant mt-3 leading-relaxed">{step.desc}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ─────────────── Stats ─────────────── */}
+        <section className="px-5 sm:px-8 py-24">
+          <div className="max-w-[1240px] mx-auto grid grid-cols-2 lg:grid-cols-4 gap-y-12 gap-x-8">
+            {stats.map((s, i) => (
+              <Reveal key={s.label} delay={i * 80} className="text-center">
+                <div className="number-serif text-on-surface text-5xl md:text-6xl">{s.value}</div>
+                <div className="text-label-caps uppercase text-on-surface-variant mt-3">{s.label}</div>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+
+        {/* ─────────────── Selected work ─────────────── */}
+        <section className="px-5 sm:px-8 py-24 border-t border-outline-variant/60">
+          <div className="max-w-[1240px] mx-auto">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+              <Reveal className="max-w-2xl">
+                <span className="eyebrow">Selected work</span>
+                <h2 className="text-h1 text-on-surface mt-4">Outcomes we're proud of.</h2>
+              </Reveal>
+              <Reveal delay={120}>
+                <Link href="/portfolio" className="link-underline text-on-surface font-medium shrink-0">
+                  All client stories
+                  <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+                </Link>
+              </Reveal>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {work.map((w, i) => (
+                <Reveal key={w.id} delay={i * 100}>
+                  <Link href="/portfolio" className="card-elegant group block overflow-hidden h-full">
+                    <div
+                      className="relative aspect-16/10 overflow-hidden"
+                      style={{ background: `linear-gradient(135deg, ${w.from}, ${w.to})` }}
+                    >
+                      <div
+                        className="absolute inset-0 opacity-[0.07]"
+                        style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)", backgroundSize: "36px 36px" }}
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <span className="number-serif text-white/15 text-[7rem] leading-none">{w.id}</span>
+                      </div>
+                      <span className="absolute top-5 left-5 text-xs uppercase tracking-widest text-white/80 bg-black/20 backdrop-blur-sm px-3 py-1.5 rounded-full">
+                        {w.cat}
+                      </span>
+                    </div>
+                    <div className="p-8 flex items-center justify-between gap-4">
+                      <div>
+                        <h3 className="text-h3 text-on-surface">{w.title}</h3>
+                        <p className="text-body-md text-gold mt-1">{w.result}</p>
+                      </div>
+                      <span className="material-symbols-outlined text-on-surface-variant/50 group-hover:text-gold group-hover:translate-x-1 transition-all">
+                        arrow_forward
+                      </span>
+                    </div>
+                  </Link>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ─────────────── CTA ─────────────── */}
+        <section className="px-5 sm:px-8 pb-24">
+          <Reveal className="max-w-[1240px] mx-auto">
+            <div className="relative overflow-hidden rounded-[1.75rem] bg-inverse-surface text-inverse-on-surface px-8 py-20 md:px-16 md:py-28 text-center">
+              <div className="ambient-orb" style={{ width: "560px", height: "560px", bottom: "-300px", left: "50%", transform: "translateX(-50%)", background: "radial-gradient(circle, rgba(255,191,0,0.22), transparent 70%)" }} />
+              <div className="relative">
+                <h2 className="text-display" style={{ fontSize: "clamp(2.25rem, 5vw, 4rem)" }}>
+                  Let's build something{" "}
+                  <span className="serif-italic" style={{ color: "var(--m3-primary-fixed-dim)" }}>enduring</span>.
+                </h2>
+                <p className="text-body-lg opacity-80 max-w-xl mx-auto mt-6">
+                  Tell us about your ambitions. We'll bring the engineering, design, and
+                  strategy to make them real.
+                </p>
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 mt-10 bg-primary-container text-on-primary-container px-8 py-4 rounded-full font-medium hover:brightness-105 transition-all press-scale"
+                >
+                  Start a conversation
+                  <span className="material-symbols-outlined text-[18px]">arrow_outward</span>
+                </Link>
+              </div>
+            </div>
+          </Reveal>
+        </section>
+      </main>
+
       <Footer />
     </div>
-  );
+  )
 }

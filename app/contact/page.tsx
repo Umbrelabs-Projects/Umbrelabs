@@ -1,387 +1,215 @@
 "use client"
 
-import { useState } from "react"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
-import {
-  Mail,
-  Phone,
-  MapPin,
-  Clock,
-  Send,
-  ArrowLeft,
-  CheckCircle,
-  MessageSquare,
-  Users,
-  Target
-} from "lucide-react"
+import { useState, type FormEvent } from "react"
 import Navigation from "@/components/navigation"
-import AnimatedBackground from "@/components/animated-background"
 import Footer from "@/components/footer"
+import Reveal from "@/components/reveal"
+
+const details = [
+  { icon: "mail", label: "Email", value: "contact@umbrelabs.com", href: "mailto:contact@umbrelabs.com" },
+  { icon: "call", label: "Phone", value: "+233 243 528 501", href: "tel:+233243528501" },
+  { icon: "location_on", label: "Location", value: "Ghana · Worldwide", href: null },
+]
+
+const projectTypes = ["Technology Development", "Creative Design", "Data & Analytics", "Digital Consulting", "Other"]
+
+const nextSteps = [
+  { n: "01", text: "We review your message and respond within one business day." },
+  { n: "02", text: "A short discovery call to understand scope, goals, and constraints." },
+  { n: "03", text: "A tailored proposal with timeline, team, and investment." },
+]
+
+const inputClass =
+  "w-full bg-surface-container-low border border-outline-variant rounded-xl px-4 py-3.5 text-on-surface placeholder:text-on-surface-variant/60 focus:outline-none focus:border-gold focus:ring-2 focus:ring-primary/20 transition-all"
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    company: "",
-    phone: "",
-    service: "",
-    message: ""
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  const resetForm = () => {
-    setFormData({
-      name: "",
-      email: "",
-      company: "",
-      phone: "",
-      service: "",
-      message: ""
-    })
-    setIsSubmitted(false)
-  }
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }))
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    setIsSubmitting(true)
+    setLoading(true)
+    setError(null)
+
+    const form = e.currentTarget
+    const data = new FormData(form)
+    const payload = {
+      name: data.get("name"),
+      email: data.get("email"),
+      company: data.get("company"),
+      service: data.get("service"),
+      message: data.get("message"),
+    }
 
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       })
-
-      if (response.ok) {
-        setIsSubmitted(true)
-      } else {
-        throw new Error('Failed to send message')
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}))
+        throw new Error(body.error || "Failed to send message. Please try again.")
       }
-    } catch (error) {
-      console.error('Error sending message:', error)
-      // For now, simulate success for demo purposes
-      setIsSubmitted(true)
+      form.reset()
+      setSubmitted(true)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.")
     } finally {
-      setIsSubmitting(false)
+      setLoading(false)
     }
-  }
-
-  const contactInfo = [
-    {
-      icon: Mail,
-      title: "Email Us",
-      details: "demoray18@gmail.com",
-      description: "Send us an email anytime"
-    },
-    {
-      icon: Phone,
-      title: "Call Us",
-      details: "+233243528501",
-      description: "Mon-Fri 9AM-6PM EST"
-    },
-    {
-      icon: MapPin,
-      title: "Visit Us",
-      details: "123 Innovation Drive, Tech City, TC 12345",
-      description: "Schedule a meeting"
-    },
-    {
-      icon: Clock,
-      title: "Response Time",
-      details: "Within 24 hours",
-      description: "We value your time"
-    }
-  ]
-
-  const services = [
-    "Business Solutions",
-    "Technology Development",
-    "Creative Design",
-    "Project Management",
-    "Data Analytics",
-    "Digital Consulting",
-    "Innovation Labs",
-    "Process Optimization",
-    "Other"
-  ]
-
-  if (isSubmitted) {
-    return (
-      <div className="min-h-screen bg-background">
-        <Navigation />
-        <div className="pt-20 pb-16 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl mx-auto text-center">
-            <div className="mb-8">
-              <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-              <h1 className="text-3xl sm:text-4xl font-bold mb-4">Thank You!</h1>
-              <p className="text-lg text-muted-foreground mb-8">
-                Your message has been sent successfully. We'll get back to you within 24 hours.
-              </p>
-            </div>
-            <div className="space-y-4">
-              <Button asChild className="bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-700 hover:to-yellow-700">
-                <Link href="/">Return Home</Link>
-              </Button>
-              <Button variant="outline" onClick={resetForm}>
-                Send Another Message
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
   }
 
   return (
-    <div className="min-h-screen bg-background relative">
-      {/* Background */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <AnimatedBackground variant="default" />
-      </div>
-
+    <div className="min-h-screen flex flex-col text-on-surface overflow-x-hidden bg-background">
       <Navigation />
 
-      {/* Hero Section */}
-      <section className="pt-20 pb-16 px-4 sm:px-6 md:px-8 lg:px-16 bg-gradient-to-br from-amber-50/50 to-yellow-50/50 dark:from-amber-950/20 dark:to-yellow-950/20">
-        <div className="max-w-screen-2xl mx-auto">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-              Let's Start
-              <span className="text-primary bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent block">
-                Building Together
-              </span>
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Ready to transform your vision into reality? Get in touch with our team of experts.
-              We're here to understand your needs and craft the perfect solution.
-            </p>
+      <main className="grow">
+        {/* ─────────────── Hero ─────────────── */}
+        <section className="relative px-5 sm:px-8 pt-40 pb-16 md:pt-48 border-b border-outline-variant/60">
+          <div className="ambient-orb" style={{ width: "560px", height: "560px", top: "-160px", left: "-120px", background: "radial-gradient(circle, rgba(255,191,0,0.13), transparent 70%)" }} />
+          <div className="relative max-w-[1240px] mx-auto">
+            <Reveal>
+              <span className="eyebrow">Contact</span>
+            </Reveal>
+            <Reveal delay={80}>
+              <h1 className="text-display text-on-surface mt-6 max-w-3xl" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)" }}>
+                Let's start a{" "}
+                <span className="serif-italic text-gold">conversation</span>.
+              </h1>
+            </Reveal>
+            <Reveal delay={160}>
+              <p className="text-body-lg text-on-surface-variant max-w-2xl mt-8">
+                Whether you have a defined brief or a half-formed idea, we'd love to
+                hear from you. Tell us what you're building.
+              </p>
+            </Reveal>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Contact Info Cards */}
-      <section className="py-16 px-4 sm:px-6 md:px-8 lg:px-16">
-        <div className="max-w-screen-2xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            {contactInfo.map((info, index) => {
-              const Icon = info.icon
-              return (
-                <Card key={index} className="p-6 text-center hover:shadow-lg transition-all duration-300 border-border/50 hover:scale-105 group relative overflow-hidden">
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                    <div className="absolute top-4 left-6 w-1.5 h-1.5 bg-amber-400 rounded-full animate-ping"></div>
-                    <div className="absolute top-8 right-4 w-1 h-1 bg-yellow-400 rounded-full animate-pulse delay-100"></div>
-                    <div className="absolute bottom-6 left-8 w-2 h-2 bg-amber-300 rounded-full animate-bounce delay-200"></div>
-                    <div className="absolute top-1/3 right-8 w-1.5 h-1.5 bg-yellow-500 rounded-full animate-pulse delay-300"></div>
-                    <div className="absolute bottom-8 right-6 w-1 h-1 bg-amber-500 rounded-full animate-ping delay-400"></div>
-                    <div className="absolute top-2/3 left-4 w-2.5 h-2.5 bg-yellow-300 rounded-full animate-bounce delay-500"></div>
-                  </div>
-                  <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-yellow-500 rounded-lg flex items-center justify-center mx-auto mb-4">
-                    <Icon className="w-6 h-6 text-white" />
-                  </div>
-                  <h3 className="font-semibold mb-2">{info.title}</h3>
-                  <p className="text-primary font-medium mb-1">{info.details}</p>
-                  <p className="text-sm text-muted-foreground">{info.description}</p>
-                </Card>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Form & Info */}
-      <section className="pb-16 px-4 sm:px-6 md:px-8 lg:px-16">
-        <div className="max-w-screen-2xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12">
-            {/* Contact Form */}
-            <Card className="p-8 border-border/50">
-              <div className="mb-6">
-                <h2 className="text-2xl font-bold mb-2">Send Us a Message</h2>
-                <p className="text-muted-foreground">
-                  Tell us about your project and we'll get back to you with a customized solution.
-                </p>
-              </div>
-
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="name">Full Name *</Label>
-                    <Input
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      required
-                      className="mt-1"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="email">Email Address *</Label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      required
-                      className="mt-1"
-                    />
-                  </div>
+        {/* ─────────────── Body ─────────────── */}
+        <section className="px-5 sm:px-8 py-20">
+          <div className="max-w-[1240px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+            {/* Form */}
+            <Reveal className="lg:col-span-7">
+              {submitted ? (
+                <div className="card-elegant p-10 lg:p-14 text-center">
+                  <span className="material-symbols-outlined text-[48px] text-gold">check_circle</span>
+                  <h2 className="text-h2 text-on-surface mt-5">Message received.</h2>
+                  <p className="text-body-lg text-on-surface-variant mt-4 max-w-md mx-auto">
+                    Thank you for reaching out. We'll be in touch within one business day.
+                  </p>
+                  <button
+                    onClick={() => setSubmitted(false)}
+                    className="inline-flex items-center gap-2 mt-8 px-6 py-3 rounded-full border border-outline-variant text-on-surface hover:bg-on-surface/5 transition-all press-scale"
+                  >
+                    Send another message
+                  </button>
                 </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="company">Company</Label>
-                    <Input
-                      id="company"
-                      name="company"
-                      value={formData.company}
-                      onChange={handleInputChange}
-                      className="mt-1"
-                    />
+              ) : (
+                <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                      <label htmlFor="name" className="text-label-caps uppercase text-on-surface-variant block mb-2.5">Full name</label>
+                      <input id="name" name="name" required type="text" placeholder="Jane Doe" className={inputClass} />
+                    </div>
+                    <div>
+                      <label htmlFor="email" className="text-label-caps uppercase text-on-surface-variant block mb-2.5">Email</label>
+                      <input id="email" name="email" required type="email" placeholder="jane@company.com" className={inputClass} />
+                    </div>
                   </div>
                   <div>
-                    <Label htmlFor="phone">Phone Number</Label>
-                    <Input
-                      id="phone"
-                      name="phone"
-                      type="tel"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className="mt-1"
-                    />
+                    <label htmlFor="company" className="text-label-caps uppercase text-on-surface-variant block mb-2.5">Company</label>
+                    <input id="company" name="company" type="text" placeholder="Your organisation" className={inputClass} />
                   </div>
-                </div>
-
-                <div>
-                  <Label htmlFor="service">Service Interested In</Label>
-                  <div className="relative mt-1">
-                    <select
-                      id="service"
-                      name="service"
-                      value={formData.service}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-input rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring text-sm sm:text-base cursor-pointer appearance-none"
-                    >
-                      <option value="">Select a service</option>
-                      {services.map((service) => (
-                        <option key={service} value={service} className="text-sm sm:text-base">{service}</option>
+                  <div>
+                    <label htmlFor="service" className="text-label-caps uppercase text-on-surface-variant block mb-2.5">Project type</label>
+                    <select id="service" name="service" required defaultValue="" className={inputClass}>
+                      <option value="" disabled>Select a focus area</option>
+                      {projectTypes.map((t) => (
+                        <option key={t} value={t}>{t}</option>
                       ))}
                     </select>
-                    <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                      <svg className="w-4 h-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
+                  </div>
+                  <div>
+                    <label htmlFor="message" className="text-label-caps uppercase text-on-surface-variant block mb-2.5">Tell us about your project</label>
+                    <textarea id="message" name="message" required rows={5} placeholder="What are you building, and what does success look like?" className={`${inputClass} resize-none`} />
+                  </div>
+
+                  {error && (
+                    <div className="flex items-start gap-3 rounded-xl border border-error/40 bg-error/5 px-4 py-3 text-error">
+                      <span className="material-symbols-outlined text-[20px] shrink-0">error</span>
+                      <p className="text-body-md">{error}</p>
                     </div>
+                  )}
+
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="inline-flex items-center justify-center gap-2 bg-on-surface text-background px-8 py-4 rounded-full font-medium hover:opacity-90 transition-all press-scale w-full sm:w-auto disabled:opacity-60 disabled:cursor-not-allowed"
+                  >
+                    {loading ? "Sending…" : "Send message"}
+                    <span className={`material-symbols-outlined text-[18px] ${loading ? "animate-spin" : ""}`}>
+                      {loading ? "progress_activity" : "arrow_outward"}
+                    </span>
+                  </button>
+                </form>
+              )}
+            </Reveal>
+
+            {/* Sidebar */}
+            <Reveal delay={120} className="lg:col-span-5">
+              <div className="space-y-10">
+                <div>
+                  <h3 className="text-h3 text-on-surface mb-6">Reach us directly</h3>
+                  <div className="space-y-4">
+                    {details.map((d) => {
+                      const inner = (
+                        <div className="flex items-center gap-4 card-elegant p-5 group">
+                          <span className="w-11 h-11 rounded-full bg-surface-container flex items-center justify-center text-gold shrink-0">
+                            <span className="material-symbols-outlined text-[20px]">{d.icon}</span>
+                          </span>
+                          <div className="min-w-0">
+                            <div className="text-label-caps uppercase text-on-surface-variant">{d.label}</div>
+                            <div className="text-on-surface wrap-break-word group-hover:text-gold transition-colors">{d.value}</div>
+                          </div>
+                        </div>
+                      )
+                      return d.href ? (
+                        <a key={d.label} href={d.href} className="block">{inner}</a>
+                      ) : (
+                        <div key={d.label}>{inner}</div>
+                      )
+                    })}
                   </div>
                 </div>
 
                 <div>
-                  <Label htmlFor="message">Project Details *</Label>
-                  <Textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    required
-                    rows={5}
-                    className="mt-1"
-                    placeholder="Tell us about your project, goals, timeline, and any specific requirements..."
-                  />
+                  <h3 className="text-h3 text-on-surface mb-6">What happens next</h3>
+                  <div className="space-y-5">
+                    {nextSteps.map((s) => (
+                      <div key={s.n} className="flex gap-4">
+                        <span className="number-serif text-gold text-lg shrink-0">{s.n}</span>
+                        <p className="text-body-md text-on-surface-variant leading-relaxed">{s.text}</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
-                <Button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-700 hover:to-yellow-700 text-white py-3"
-                >
-                  {isSubmitting ? (
-                    "Sending..."
-                  ) : (
-                    <>
-                      Send Message
-                      <Send className="ml-2 w-4 h-4" />
-                    </>
-                  )}
-                </Button>
-              </form>
-            </Card>
-
-            {/* Why Choose Us */}
-            <div className="space-y-8">
-              <div>
-                <h2 className="text-2xl font-bold mb-6">Why Choose Umbrelabs?</h2>
-                <div className="space-y-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 bg-gradient-to-r from-amber-500 to-yellow-500 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-                      <Target className="w-5 h-5 text-white" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold mb-2">Comprehensive Solutions</h3>
-                      <p className="text-muted-foreground">
-                        From initial concept to final delivery, we handle every aspect of your project under one roof.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 bg-gradient-to-r from-amber-500 to-yellow-500 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-                      <Users className="w-5 h-5 text-white" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold mb-2">Expert Team</h3>
-                      <p className="text-muted-foreground">
-                        Our diverse team of specialists brings years of experience across technology, design, and business domains.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 bg-gradient-to-r from-amber-500 to-yellow-500 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-                      <MessageSquare className="w-5 h-5 text-white" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold mb-2">Transparent Communication</h3>
-                      <p className="text-muted-foreground">
-                        Regular updates, clear timelines, and honest feedback throughout your project journey.
-                      </p>
-                    </div>
-                  </div>
+                <div className="flex items-center gap-3 pt-2">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-70 animate-ping" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                  </span>
+                  <span className="text-sm text-on-surface-variant">Currently accepting new projects for 2026</span>
                 </div>
               </div>
-
-              <Card className="p-6 border-border/50">
-                <h3 className="font-semibold mb-4">Ready to Get Started?</h3>
-                <p className="text-muted-foreground mb-4">
-                  Book a free 30-minute strategy call to discuss your project and explore how we can help.
-                </p>
-                <Button
-                  onClick={() => window.open('https://calendly.com/umbrelabs/strategy-call', '_blank')}
-                  className="w-full bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-700 hover:to-yellow-700"
-                >
-                  Book Free Strategy Call
-                </Button>
-              </Card>
-            </div>
+            </Reveal>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
-      {/* Footer */}
       <Footer />
     </div>
   )
