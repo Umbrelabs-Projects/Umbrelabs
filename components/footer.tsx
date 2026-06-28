@@ -62,7 +62,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-16 pt-8 border-t border-outline-variant/60 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-on-surface-variant">© 2025 Umbrelabs. All rights reserved.</p>
+          <p className="text-sm text-on-surface-variant">© 2026 Umbrelabs. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <Link href="#" className="text-sm text-on-surface-variant hover:text-on-surface transition-colors">Privacy</Link>
             <Link href="#" className="text-sm text-on-surface-variant hover:text-on-surface transition-colors">Terms</Link>
