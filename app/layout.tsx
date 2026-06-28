@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/logos/umbrelabs-favicon.ico" },
+      { url: "/logos/favicon.ico" },
       { url: siteConfig.logo, type: "image/png" },
     ],
     apple: siteConfig.logo,
