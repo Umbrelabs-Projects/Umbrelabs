@@ -18,7 +18,15 @@ export const metadata: Metadata = {
   },
 }
 
-const team = [
+type Member = {
+  name: string
+  role: string
+  initials: string
+  /** Optional portrait in /public/team. Falls back to initials when omitted. */
+  image?: string
+}
+
+const team: Member[] = [
   { name: "Benjamin Odoi-Lartey", role: "Chief Executive Officer", initials: "BO" },
   { name: "Brigid Addai-Mmra", role: "Lead Designer", initials: "BA" },
   { name: "Elvis Gyasi Owusu", role: "Software Engineer", initials: "EG" },
@@ -126,6 +134,7 @@ export default function AboutPage() {
                 <Reveal key={member.name} delay={i * 80}>
                   <div className="group">
                     <div className="relative aspect-4/5 rounded-[1.25rem] overflow-hidden border border-outline-variant/70 bg-surface-container flex items-center justify-center transition-all duration-500 group-hover:border-gold/40">
+                      {/* Fallback layer: grid + initials (sits beneath any portrait) */}
                       <div
                         className="absolute inset-0 opacity-[0.05]"
                         style={{ backgroundImage: "linear-gradient(var(--m3-on-surface) 1px, transparent 1px), linear-gradient(90deg, var(--m3-on-surface) 1px, transparent 1px)", backgroundSize: "26px 26px" }}
@@ -133,6 +142,16 @@ export default function AboutPage() {
                       <span className="number-serif text-on-surface/25 text-6xl transition-transform duration-500 group-hover:scale-110">
                         {member.initials}
                       </span>
+
+                      {/* Portrait (covers fallback when present) */}
+                      {member.image && (
+                        <img
+                          src={member.image}
+                          alt={member.name}
+                          loading="lazy"
+                          className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.04]"
+                        />
+                      )}
                     </div>
                     <h3 className="text-h3 text-on-surface mt-5">{member.name}</h3>
                     <p className="text-body-md text-gold mt-1">{member.role}</p>

@@ -8,27 +8,43 @@ import Reveal from "@/components/reveal"
 
 const categories = ["All Work", "Technical Engineering", "Creative Design", "Process Optimisation", "Network Ops"]
 
-const projects = [
+type Project = {
+  id: string
+  category: string
+  title: string
+  desc: string
+  tech: string[]
+  result: string
+  from: string
+  to: string
+  wide?: boolean
+  /** Optional screenshot in /public/projects. Falls back to the gradient if omitted/missing. */
+  image?: string
+}
+
+const projects: Project[] = [
   {
     id: "01",
-    category: "Network Ops",
-    title: "Neural Node Expansion",
-    desc: "Architecture and deployment of a low-latency global edge network for a tier-one financial institution, achieving exceptional uptime through custom redundancy protocols.",
-    tech: ["AWS", "Rust", "Kubernetes"],
-    result: "99.999% uptime",
+    category: "Technical Engineering",
+    title: "Hostella",
+    desc: "A hostel management system, allowing students to book rooms, pay hostel fees, and view their bookings.",
+    tech: ["Express.js", "Tawk.to", "Next.js", "Node.js", "PostgreSQL", "Tailwind CSS", "TypeScript", "Paystack"],
+    result: "Completed",
     from: "#1a160e",
     to: "#4a3a12",
     wide: true,
+    image: "/projects/hostella.png",
   },
   {
     id: "02",
     category: "Process Optimisation",
-    title: "LogicStream Core",
-    desc: "Refactoring internal data pipelines for a leading logistics provider, cutting processing overhead substantially.",
-    tech: ["Python", "Kafka"],
-    result: "−40% overhead",
+    title: "Procobiz",
+    desc: "A modern corporate website for a procurement and supply company, built with a focus on clear service and capability presentation, professional brand positioning and credibility, responsive, performance-optimized UI, and Scalable architecture for future content and growth",
+    tech: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Lucide Icons", "Vercel"],
+    result: "Completed",
     from: "#0b3b38",
     to: "#0b6b63",
+    image: "/projects/procobiz.png",
   },
   {
     id: "03",
@@ -122,6 +138,7 @@ export default function PortfolioPage() {
                     className={`relative overflow-hidden ${p.wide ? "aspect-21/9" : "aspect-16/10"}`}
                     style={{ background: `linear-gradient(135deg, ${p.from}, ${p.to})` }}
                   >
+                    {/* Fallback layer: grid + serif number (sits beneath any screenshot) */}
                     <div
                       className="absolute inset-0 opacity-[0.07]"
                       style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)", backgroundSize: "36px 36px" }}
@@ -129,10 +146,27 @@ export default function PortfolioPage() {
                     <div className="absolute inset-0 flex items-center justify-center">
                       <span className="number-serif text-white/12 text-[8rem] leading-none">{p.id}</span>
                     </div>
-                    <span className="absolute top-5 left-5 text-xs uppercase tracking-widest text-white/85 bg-black/20 backdrop-blur-sm px-3 py-1.5 rounded-full">
+
+                    {/* Screenshot (covers fallback when present; hides itself if the file is missing) */}
+                    {p.image && (
+                      <img
+                        src={p.image}
+                        alt={`${p.title} — project screenshot`}
+                        loading="lazy"
+                        className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
+                        onError={(e) => {
+                          ;(e.currentTarget as HTMLImageElement).style.display = "none"
+                        }}
+                      />
+                    )}
+
+                    {/* Readability scrim for badges over imagery */}
+                    <div className="absolute inset-0 bg-linear-to-b from-black/25 via-transparent to-black/30 pointer-events-none" />
+
+                    <span className="absolute top-5 left-5 text-xs uppercase tracking-widest text-white/90 bg-black/30 backdrop-blur-sm px-3 py-1.5 rounded-full">
                       {p.category}
                     </span>
-                    <span className="absolute bottom-5 right-5 text-sm text-white/90 bg-black/25 backdrop-blur-sm px-3 py-1.5 rounded-full">
+                    <span className="absolute bottom-5 right-5 text-sm text-white/95 bg-black/35 backdrop-blur-sm px-3 py-1.5 rounded-full">
                       {p.result}
                     </span>
                   </div>
