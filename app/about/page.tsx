@@ -1,10 +1,25 @@
+import type { Metadata } from "next"
 import Link from "next/link"
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import Reveal from "@/components/reveal"
+import { absoluteUrl } from "@/lib/site"
+
+export const metadata: Metadata = {
+  title: "About",
+  description:
+    "Umbrelabs is a multi-disciplinary technology studio architecting resilient, high-performance systems. Discover our methodology, guiding principles, and the team behind the work.",
+  alternates: { canonical: "/about" },
+  openGraph: {
+    title: "About · Umbrelabs",
+    description:
+      "Architecting the future of systems — the methodology, principles, and people behind Umbrelabs.",
+    url: absoluteUrl("/about"),
+  },
+}
 
 const team = [
-  { name: "Benjamin Odoi-Lartey", role: "Chief Systems Architect", initials: "BO" },
+  { name: "Benjamin Odoi-Lartey", role: "Chief Executive Officer", initials: "BO" },
   { name: "Brigid Addai-Mmra", role: "Lead Designer", initials: "BA" },
   { name: "Elvis Gyasi Owusu", role: "Software Engineer", initials: "EG" },
   { name: "Raymond Antwi Aboagye", role: "Software Engineer", initials: "RA" },
@@ -18,10 +33,10 @@ const principles = [
 ]
 
 const stats = [
-  { value: "128+", label: "Systems deployed" },
+  { value: "50+", label: "Systems deployed" },
   { value: "99.99%", label: "Uptime SLA" },
   { value: "50+", label: "Global clients" },
-  { value: "8+", label: "Years of practice" },
+  { value: "3+", label: "Years of practice" },
 ]
 
 export default function AboutPage() {

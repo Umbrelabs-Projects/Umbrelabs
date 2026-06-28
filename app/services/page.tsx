@@ -1,7 +1,22 @@
+import type { Metadata } from "next"
 import Link from "next/link"
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import Reveal from "@/components/reveal"
+import { absoluteUrl } from "@/lib/site"
+
+export const metadata: Metadata = {
+  title: "Services",
+  description:
+    "From software engineering and cloud architecture to creative design, data analytics, and digital consulting — explore the capabilities Umbrelabs delivers across the entire product lifecycle.",
+  alternates: { canonical: "/services" },
+  openGraph: {
+    title: "Services · Umbrelabs",
+    description:
+      "Engineering and design under one roof — the capabilities Umbrelabs delivers across the product lifecycle.",
+    url: absoluteUrl("/services"),
+  },
+}
 
 const services = [
   {

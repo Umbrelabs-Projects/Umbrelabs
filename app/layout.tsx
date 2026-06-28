@@ -2,14 +2,88 @@ import type React from "react"
 import type { Metadata } from "next"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
+import { siteConfig, absoluteUrl } from "@/lib/site"
 
 export const metadata: Metadata = {
-  title: "Umbrelabs — Engineering the Future of Technology",
-  description:
-    "Umbrelabs delivers multi-disciplinary excellence across Technology Development, Creative Design, and Strategic Consulting for the modern global enterprise.",
-  icons: {
-    icon: "/logos/umbrelabs-high-resolution-logo-transparent.png",
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: siteConfig.title,
+    template: `%s · ${siteConfig.name}`,
   },
+  description: siteConfig.description,
+  keywords: [...siteConfig.keywords],
+  applicationName: siteConfig.name,
+  authors: [{ name: siteConfig.name, url: siteConfig.url }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
+  category: "technology",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: siteConfig.locale,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    title: siteConfig.title,
+    description: siteConfig.description,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.title,
+    description: siteConfig.description,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  icons: {
+    icon: [
+      { url: "/logos/umbrelabs-favicon.ico" },
+      { url: siteConfig.logo, type: "image/png" },
+    ],
+    apple: siteConfig.logo,
+  },
+}
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: siteConfig.name,
+  url: siteConfig.url,
+  logo: absoluteUrl(siteConfig.logo),
+  description: siteConfig.description,
+  email: siteConfig.email,
+  telephone: siteConfig.phone,
+  address: {
+    "@type": "PostalAddress",
+    addressCountry: siteConfig.country,
+  },
+  areaServed: "Worldwide",
+  knowsAbout: [
+    "Software Development",
+    "Cloud Infrastructure",
+    "Data Analytics",
+    "Machine Learning",
+    "UX Design",
+    "Digital Consulting",
+  ],
+}
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: siteConfig.name,
+  url: siteConfig.url,
+  description: siteConfig.description,
+  publisher: { "@type": "Organization", name: siteConfig.name },
 }
 
 export default function RootLayout({
@@ -46,6 +120,14 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: setThemeScript }} />
       </head>
       <body className="antialiased" style={{ fontFamily: "'Inter', sans-serif" }} suppressHydrationWarning>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
