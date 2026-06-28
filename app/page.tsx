@@ -30,8 +30,8 @@ const stats = [
 ]
 
 const work = [
-  { id: "01", title: "Neural Node Expansion", cat: "Network Operations", result: "99.999% uptime", from: "#1a160e", to: "#3a2f12" },
-  { id: "03", title: "Aether UI System", cat: "Creative Design", result: "9.8 experience score", from: "#0b3b38", to: "#0b6b63" },
+  { id: "01", title: "Hostella", cat: "Technical Engineering", result: "Completed", from: "#1a160e", to: "#3a2f12" },
+  { id: "02", title: "Procobiz", cat: "Procurement Management", result: "Completed", from: "#0b3b38", to: "#0b6b63" },
 ]
 
 export default function HomePage() {
