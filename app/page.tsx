@@ -29,10 +29,22 @@ const stats = [
   { value: "3+", label: "Years of practice" },
 ]
 
-const work = [
-  { id: "01", title: "Hostella", cat: "Technical Engineering", result: "Completed", from: "#1a160e", to: "#3a2f12" },
-  { id: "02", title: "Procobiz", cat: "Procurement Management", result: "Completed", from: "#0b3b38", to: "#0b6b63" },
+type Work = {
+  id: string
+  title: string
+  cat: string
+  result: string
+  from: string
+  to: string
+  image?: string
+  link?: string
+}
+
+const work: Work[] = [
+  { id: "01", title: "Hostella", cat: "Technical Engineering", result: "Completed", from: "#1a160e", to: "#3a2f12", image: "/projects/hostella.png", link: "https://hostellapp.com" },
+  { id: "02", title: "Procobiz", cat: "Procurement Management", result: "Completed", from: "#0b3b38", to: "#0b6b63", image: "/projects/procobiz.png", link: "https://procobiz.com" },
 ]
+
 
 export default function HomePage() {
   return (
@@ -97,7 +109,7 @@ export default function HomePage() {
               Trusted by forward-thinking organisations
             </p>
             <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
-              {["Quantum Core", "Neural Networks", "Cyber Defense", "Strata Systems", "Nexus Labs"].map((name) => (
+              {["Procobiz", "Neural Networks", "Hostella", "Strata Systems", "Nexus Labs"].map((name) => (
                 <span
                   key={name}
                   className="text-xl md:text-2xl text-on-surface/35 hover:text-on-surface/70 transition-colors"
@@ -206,11 +218,12 @@ export default function HomePage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {work.map((w, i) => (
                 <Reveal key={w.id} delay={i * 100}>
-                  <Link href="/portfolio" className="card-elegant group block overflow-hidden h-full">
+                  <Link href={w.link ?? "/portfolio"} className="card-elegant group block overflow-hidden h-full">
                     <div
                       className="relative aspect-16/10 overflow-hidden"
                       style={{ background: `linear-gradient(135deg, ${w.from}, ${w.to})` }}
                     >
+                      {/* Fallback layer: grid + serif number (sits beneath any screenshot) */}
                       <div
                         className="absolute inset-0 opacity-[0.07]"
                         style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)", backgroundSize: "36px 36px" }}
@@ -218,7 +231,21 @@ export default function HomePage() {
                       <div className="absolute inset-0 flex items-center justify-center">
                         <span className="number-serif text-white/15 text-[7rem] leading-none">{w.id}</span>
                       </div>
-                      <span className="absolute top-5 left-5 text-xs uppercase tracking-widest text-white/80 bg-black/20 backdrop-blur-sm px-3 py-1.5 rounded-full">
+
+                      {/* Screenshot (covers fallback when present) */}
+                      {w.image && (
+                        <img
+                          src={w.image}
+                          alt={`${w.title} — project screenshot`}
+                          loading="lazy"
+                          className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
+                        />
+                      )}
+
+                      {/* Readability scrim for the badge over imagery */}
+                      <div className="absolute inset-0 bg-linear-to-b from-black/25 via-transparent to-transparent pointer-events-none" />
+
+                      <span className="absolute top-5 left-5 text-xs uppercase tracking-widest text-white/90 bg-black/30 backdrop-blur-sm px-3 py-1.5 rounded-full">
                         {w.cat}
                       </span>
                     </div>
