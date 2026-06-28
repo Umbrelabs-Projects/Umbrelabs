@@ -1,55 +1,53 @@
 "use client"
 
-import type React from "react"
-import { createContext, useContext, useEffect, useState } from "react"
+import React, { createContext, useContext, useEffect, useState } from "react"
 
-type Theme = "amber-noir" | "amber-glow"
-type ThemeProviderContextType = {
+type Theme = "dark" | "light"
+
+interface ThemeContextType {
   theme: Theme
   toggleTheme: () => void
 }
 
-/**
- * Safely determine the initial theme:
- * • Try localStorage (if we’re in the browser)
- * • Otherwise fall back to the system preference
- * • Default to "amber-glow" during SSR (important: this should match the inline script's default)
- */
-function getInitialTheme(): Theme {
-  if (typeof window === "undefined") return "amber-glow" // SSR default for React state
-
-  const saved = localStorage.getItem("umbrelabs-theme") as Theme | null
-  if (saved) return saved
-
-  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
-  return prefersDark ? "amber-noir" : "amber-glow"
-}
-
-const ThemeProviderContext = createContext<ThemeProviderContextType | undefined>(undefined)
-
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // Initialize React state with the initial theme.
-  // This value will be consistent with what the inline script sets on the HTML.
-  const [theme, setTheme] = useState<Theme>(() => getInitialTheme())
-
-  /** Apply the 'amber-noir' class (or remove it) on every change & persist the choice */
-  useEffect(() => {
-    const root = window.document.documentElement
-    if (theme === "amber-noir") {
-      root.classList.add("dark")
-    } else {
-      root.classList.remove("dark")
-    }
-    localStorage.setItem("umbrelabs-theme", theme)
-  }, [theme])
-
-  const toggleTheme = () => setTheme((prev) => (prev === "amber-noir" ? "amber-glow" : "amber-noir"))
-
-  return <ThemeProviderContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeProviderContext.Provider>
-}
+const ThemeContext = createContext<ThemeContextType>({
+  theme: "light",
+  toggleTheme: () => {},
+})
 
 export function useTheme() {
-  const ctx = useContext(ThemeProviderContext)
-  if (!ctx) throw new Error("useTheme must be used within a ThemeProvider")
-  return ctx
+  return useContext(ThemeContext)
+}
+
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const [theme, setTheme] = useState<Theme>("light")
+
+  useEffect(() => {
+    const stored = localStorage.getItem("umbrelabs-theme") as Theme | null
+    const initial: Theme = stored ?? "light"
+    setTheme(initial)
+    applyTheme(initial)
+  }, [])
+
+  function applyTheme(t: Theme) {
+    if (t === "dark") {
+      document.documentElement.classList.add("dark")
+      document.documentElement.classList.remove("light")
+    } else {
+      document.documentElement.classList.remove("dark")
+      document.documentElement.classList.add("light")
+    }
+  }
+
+  function toggleTheme() {
+    const next: Theme = theme === "dark" ? "light" : "dark"
+    setTheme(next)
+    applyTheme(next)
+    localStorage.setItem("umbrelabs-theme", next)
+  }
+
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  )
 }
