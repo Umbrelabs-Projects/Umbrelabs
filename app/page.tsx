@@ -3,6 +3,7 @@ import Link from "next/link"
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import Reveal from "@/components/reveal"
+import HeroSlideshow from "@/components/hero-slideshow"
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -53,52 +54,60 @@ export default function HomePage() {
 
       <main className="grow">
         {/* ─────────────── Hero ─────────────── */}
-        <section className="relative px-5 sm:px-8 pt-40 pb-24 md:pt-48 md:pb-32">
+        <section className="relative px-5 sm:px-8 pt-36 pb-20 md:pt-44 md:pb-28">
           <div className="ambient-orb" style={{ width: "640px", height: "640px", top: "-180px", right: "-120px", background: "radial-gradient(circle, rgba(255,191,0,0.16), transparent 70%)" }} />
           <div className="ambient-orb" style={{ width: "520px", height: "520px", top: "40px", left: "-200px", background: "radial-gradient(circle, rgba(11,107,99,0.10), transparent 70%)" }} />
 
-          <div className="relative max-w-[920px] mx-auto text-center">
-            <Reveal>
-              <span className="eyebrow inline-flex items-center gap-2">
-                <span className="w-6 h-px bg-primary/50" />
-                Multi-disciplinary technology studio
-                <span className="w-6 h-px bg-primary/50" />
-              </span>
-            </Reveal>
+          <div className="relative max-w-[1240px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            {/* Text */}
+            <div className="lg:col-span-6">
+              <Reveal>
+                <span className="eyebrow inline-flex items-center gap-2">
+                  <span className="w-6 h-px bg-primary/50" />
+                  Multi-disciplinary technology studio
+                </span>
+              </Reveal>
 
-            <Reveal delay={80}>
-              <h1 className="text-display text-on-surface mt-7">
-                Engineering the future
-                <br className="hidden sm:block" /> of technology, with{" "}
-                <span className="serif-italic text-gold">craft</span>.
-              </h1>
-            </Reveal>
+              <Reveal delay={80}>
+                <h1 className="text-display text-on-surface mt-6">
+                  Engineering the future of technology, with{" "}
+                  <span className="serif-italic text-gold">craft</span>.
+                </h1>
+              </Reveal>
 
-            <Reveal delay={160}>
-              <p className="text-body-lg text-on-surface-variant max-w-2xl mx-auto mt-8">
-                Umbrelabs partners with ambitious organisations to design, build, and
-                evolve resilient digital systems — uniting deep engineering with
-                considered design and clear strategy.
-              </p>
-            </Reveal>
+              <Reveal delay={160}>
+                <p className="text-body-lg text-on-surface-variant max-w-xl mt-7">
+                  Umbrelabs partners with ambitious organisations to design, build, and
+                  evolve resilient digital systems — uniting deep engineering with
+                  considered design and clear strategy.
+                </p>
+              </Reveal>
 
-            <Reveal delay={240}>
-              <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-2 bg-on-surface text-background px-7 py-3.5 rounded-full font-medium hover:opacity-90 transition-all press-scale"
-                >
-                  Start a project
-                  <span className="material-symbols-outlined text-[18px]">arrow_outward</span>
-                </Link>
-                <Link
-                  href="/portfolio"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-medium border border-outline-variant text-on-surface hover:border-on-surface/40 hover:bg-on-surface/5 transition-all press-scale"
-                >
-                  View our work
-                </Link>
-              </div>
-            </Reveal>
+              <Reveal delay={240}>
+                <div className="mt-9 flex flex-wrap items-center gap-4">
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center gap-2 bg-on-surface text-background px-7 py-3.5 rounded-full font-medium hover:opacity-90 transition-all press-scale"
+                  >
+                    Start a project
+                    <span className="material-symbols-outlined text-[18px]">arrow_outward</span>
+                  </Link>
+                  <Link
+                    href="/portfolio"
+                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-medium border border-outline-variant text-on-surface hover:border-on-surface/40 hover:bg-on-surface/5 transition-all press-scale"
+                  >
+                    View our work
+                  </Link>
+                </div>
+              </Reveal>
+            </div>
+
+            {/* Slideshow */}
+            <div className="lg:col-span-6">
+              <Reveal delay={200}>
+                <HeroSlideshow />
+              </Reveal>
+            </div>
           </div>
         </section>
 

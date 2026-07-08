@@ -3,6 +3,7 @@ import Link from "next/link"
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import Reveal from "@/components/reveal"
+import CoreValues from "@/components/core-values"
 import { absoluteUrl } from "@/lib/site"
 
 export const metadata: Metadata = {
@@ -29,8 +30,8 @@ type Member = {
 const team: Member[] = [
   { name: "Benjamin Odoi-Lartey", role: "Chief Executive Officer", initials: "BO" },
   { name: "Brigid Addai-Mmra", role: "Lead Designer", initials: "BA" },
-  { name: "Elvis Gyasi Owusu", role: "Software Engineer", initials: "EG" },
-  { name: "Raymond Antwi Aboagye", role: "Software Engineer", initials: "RA" },
+  { name: "Elvis Gyasi Owusu", role: "Lead Software Engineer", initials: "EG", image: "/team/elvis.png"  },
+  { name: "Raymond Antwi Aboagye", role: "Software Engineer", initials: "RA", image: "/team/ray.png" },
 ]
 
 const principles = [
@@ -121,8 +122,24 @@ export default function AboutPage() {
           </div>
         </section>
 
+        {/* ─────────────── Core values ─────────────── */}
+        <section className="relative px-5 sm:px-8 py-24 bg-surface border-y border-outline-variant/60 overflow-hidden">
+          <div className="ambient-orb" style={{ width: "620px", height: "620px", top: "-220px", right: "-160px", background: "radial-gradient(circle, rgba(255,191,0,0.10), transparent 70%)" }} />
+          <div className="relative max-w-[1240px] mx-auto">
+            <Reveal className="max-w-2xl mb-16">
+              <span className="eyebrow">What we stand for</span>
+              <h2 className="text-h1 text-on-surface mt-4">Our core values.</h2>
+              <p className="text-body-lg text-on-surface-variant mt-5 leading-relaxed">
+                Four principles thread through every decision we make — the through-line
+                that connects our craft, our partnerships, and our commitments.
+              </p>
+            </Reveal>
+            <CoreValues />
+          </div>
+        </section>
+
         {/* ─────────────── Team ─────────────── */}
-        <section className="px-5 sm:px-8 py-24 bg-surface border-y border-outline-variant/60">
+        <section className="px-5 sm:px-8 py-24 border-b border-outline-variant/60">
           <div className="max-w-[1240px] mx-auto">
             <Reveal className="max-w-2xl mb-16">
               <span className="eyebrow">Our core unit</span>

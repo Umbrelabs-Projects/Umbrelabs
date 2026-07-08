@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next"
+import { getAllCaseStudySlugs } from "@/lib/case-studies"
 import { absoluteUrl } from "@/lib/site"
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -10,6 +11,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/portfolio", priority: 0.8, changeFrequency: "monthly" },
     { path: "/about", priority: 0.7, changeFrequency: "monthly" },
     { path: "/contact", priority: 0.6, changeFrequency: "yearly" },
+    ...getAllCaseStudySlugs().map((slug) => ({
+      path: `/portfolio/${slug}`,
+      priority: 0.75,
+      changeFrequency: "monthly" as const,
+    })),
   ]
 
   return routes.map((route) => ({
