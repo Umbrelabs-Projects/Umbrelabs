@@ -3,6 +3,7 @@ import Link from "next/link"
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import Reveal from "@/components/reveal"
+import WaveFlow from "@/components/wave-flow"
 import { absoluteUrl } from "@/lib/site"
 
 export const metadata: Metadata = {
@@ -78,10 +79,10 @@ const services = [
 ]
 
 const steps = [
-  { n: "01", title: "Discover", desc: "We immerse ourselves in your goals, constraints, and users to define what truly matters." },
-  { n: "02", title: "Architect", desc: "We design the system and experience — pragmatic blueprints built for resilience and scale." },
-  { n: "03", title: "Build", desc: "We engineer with rigour and craft, shipping in tight, transparent, measurable iterations." },
-  { n: "04", title: "Evolve", desc: "We monitor, refine, and extend — treating launch as the beginning, not the destination." },
+  { badge: "01", icon: "travel_explore", title: "Discover", desc: "We immerse ourselves in your goals, constraints, and users to define what truly matters." },
+  { badge: "02", icon: "architecture", title: "Architect", desc: "We design the system and experience — pragmatic blueprints built for resilience and scale." },
+  { badge: "03", icon: "construction", title: "Build", desc: "We engineer with rigour and craft, shipping in tight, transparent, measurable iterations." },
+  { badge: "04", icon: "trending_up", title: "Evolve", desc: "We monitor, refine, and extend — treating launch as the beginning, not the destination." },
 ]
 
 export default function ServicesPage() {
@@ -148,22 +149,14 @@ export default function ServicesPage() {
         </section>
 
         {/* ─────────────── Process ─────────────── */}
-        <section className="px-5 sm:px-8 py-24 bg-surface border-y border-outline-variant/60">
-          <div className="max-w-[1240px] mx-auto">
+        <section className="relative px-5 sm:px-8 py-24 bg-surface border-y border-outline-variant/60 overflow-hidden">
+          <div className="ambient-orb" style={{ width: "620px", height: "620px", top: "-220px", left: "-160px", background: "radial-gradient(circle, rgba(255,191,0,0.10), transparent 70%)" }} />
+          <div className="relative max-w-[1240px] mx-auto">
             <Reveal className="max-w-2xl mb-16">
               <span className="eyebrow">How we work</span>
               <h2 className="text-h1 text-on-surface mt-4">A considered process, end to end.</h2>
             </Reveal>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
-              {steps.map((step, i) => (
-                <Reveal key={step.n} delay={i * 90}>
-                  <span className="number-serif text-gold text-2xl">{step.n}</span>
-                  <div className="h-px w-full bg-outline-variant/70 my-5" />
-                  <h3 className="text-h3 text-on-surface">{step.title}</h3>
-                  <p className="text-body-md text-on-surface-variant mt-3 leading-relaxed">{step.desc}</p>
-                </Reveal>
-              ))}
-            </div>
+            <WaveFlow items={steps} ariaLabel="Our process: Discover, Architect, Build, and Evolve." />
           </div>
         </section>
 

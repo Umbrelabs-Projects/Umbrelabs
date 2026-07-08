@@ -20,6 +20,8 @@ type Project = {
   wide?: boolean
   /** Optional screenshot in /public/projects. Falls back to the gradient if omitted/missing. */
   image?: string
+  /** When set, "View case study" links to /portfolio/<slug> */
+  slug?: string
 }
 
 const projects: Project[] = [
@@ -34,17 +36,19 @@ const projects: Project[] = [
     to: "#4a3a12",
     wide: true,
     image: "/projects/hostella.png",
+    slug: "hostella",
   },
   {
     id: "02",
     category: "Process Optimisation",
     title: "Procobiz",
     desc: "A modern corporate website for a procurement and supply company, built with a focus on clear service and capability presentation, professional brand positioning and credibility, responsive, performance-optimized UI, and Scalable architecture for future content and growth",
-    tech: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Lucide Icons", "Vercel"],
+    tech: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "Vercel"],
     result: "Completed",
     from: "#0b3b38",
     to: "#0b6b63",
     image: "/projects/procobiz.png",
+    slug: "procobiz",
   },
   {
     id: "03",
@@ -133,7 +137,7 @@ export default function PortfolioPage() {
           <div className="max-w-[1240px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-5">
             {filtered.map((p, i) => (
               <Reveal key={p.id} delay={i * 70} className={p.wide ? "md:col-span-2" : ""}>
-                <Link href="/contact" className="card-elegant group block overflow-hidden h-full">
+                <Link href={p.slug ? `/portfolio/${p.slug}` : "/contact"} className="card-elegant group block overflow-hidden h-full">
                   <div
                     className={`relative overflow-hidden ${p.wide ? "aspect-21/9" : "aspect-16/10"}`}
                     style={{ background: `linear-gradient(135deg, ${p.from}, ${p.to})` }}
