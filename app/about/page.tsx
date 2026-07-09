@@ -28,8 +28,8 @@ type Member = {
 }
 
 const team: Member[] = [
-  { name: "Benjamin Odoi-Lartey", role: "Chief Executive Officer", initials: "BO" },
-  { name: "Brigid Addai-Mmra", role: "Lead Designer", initials: "BA" },
+  { name: "Benjamin Odoi-Lartey", role: "Chief Executive Officer", initials: "BO", image: "/team/ben.png" },
+  { name: "Brigid Addai-Mmra", role: "Lead Designer", initials: "BA", image: "/team/brigid.png" },
   { name: "Elvis Gyasi Owusu", role: "Lead Software Engineer", initials: "EG", image: "/team/elvis.png"  },
   { name: "Raymond Antwi Aboagye", role: "Software Engineer", initials: "RA", image: "/team/ray.png" },
 ]
